@@ -62,4 +62,11 @@ DentaFlow réunit tout ce que font les logiciels dentaires les plus chers — ag
 
 ---
 
+## 📞 Nous contacter
+
+Pour acheter une licence ou toute question :
+**📱 WhatsApp / Téléphone : [+213 676 53 88 03](https://wa.me/213676538803)**
+
+---
+
 *DentaFlow — Algérie · © 2026 · Tous droits réservés.*
