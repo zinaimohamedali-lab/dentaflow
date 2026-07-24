@@ -1,0 +1,17 @@
+# Filet de securite : ne JAMAIS versionner de secrets ni de binaires lourds
+*.pfx
+*.key
+*.key.enc
+*.snk
+*-private*
+licences-emises.csv
+*.exe
+*.msi
+
+# Artefacts / OS
+bin/
+obj/
+publish/
+Thumbs.db
+Desktop.ini
+.DS_Store
