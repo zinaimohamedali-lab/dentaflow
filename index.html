@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DentaFlow — Le logiciel du chirurgien-dentiste en Algérie</title>
+<meta name="description" content="Tout ce que font les logiciels dentaires les plus chers, réuni dans un seul logiciel 100% hors-ligne, à un prix algérien. Agenda, patients, devis, ordonnances, stock, labo, caisse, statistiques.">
+<style>
+  :root{
+    --ivory:#F1EFEA; --surface:#fff; --ink:#1E2333; --ink2:#6B7280;
+    --gold:#C6A15B; --gold-deep:#B4903F; --gold-soft:#F2EAD7;
+    --night1:#1E2438; --night2:#12141F; --line:#E7E2D7; --ok:#1FA971;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--ivory);line-height:1.6}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  a{color:inherit;text-decoration:none}
+  .btn{display:inline-block;padding:14px 28px;border-radius:12px;font-weight:600;font-size:16px;transition:.2s;cursor:pointer;border:none}
+  .btn-gold{background:var(--gold-deep);color:#fff;box-shadow:0 8px 22px rgba(180,144,63,.35)}
+  .btn-gold:hover{transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35)}
+  .btn-ghost:hover{background:rgba(255,255,255,.1)}
+
+  /* NAV */
+  header{position:sticky;top:0;z-index:20;background:rgba(241,239,234,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
+  .logo svg{width:26px;height:26px}
+  nav a{margin-left:26px;color:var(--ink2);font-size:15px;font-weight:500}
+  nav a:hover{color:var(--gold-deep)}
+  @media(max-width:720px){nav{display:none}}
+
+  /* HERO */
+  .hero{background:linear-gradient(160deg,var(--night1),var(--night2));color:#fff;padding:90px 0 100px;position:relative;overflow:hidden}
+  .hero .tooth-bg{position:absolute;right:-60px;top:20px;width:460px;opacity:.06}
+  .badge{display:inline-block;background:rgba(198,161,91,.18);color:var(--gold);border:1px solid rgba(198,161,91,.35);padding:7px 16px;border-radius:30px;font-size:13px;font-weight:600;letter-spacing:.3px}
+  .hero h1{font-size:52px;line-height:1.12;margin:22px 0 18px;font-weight:800;letter-spacing:-1px}
+  .hero h1 .g{color:var(--gold)}
+  .hero p{font-size:19px;color:#B9C0D0;max-width:640px;margin-bottom:34px}
+  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
+  .hero .note{margin-top:18px;color:#8A93A8;font-size:14px}
+  .gold-line{width:54px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:8px}
+  @media(max-width:720px){.hero h1{font-size:36px}}
+
+  /* SECTIONS */
+  section{padding:80px 0}
+  .eyebrow{color:var(--gold-deep);font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase}
+  h2{font-size:36px;font-weight:800;letter-spacing:-.5px;margin:8px 0 14px}
+  .lead{color:var(--ink2);font-size:18px;max-width:680px}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
+  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:600px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--surface);border-radius:16px;padding:26px;box-shadow:0 10px 30px rgba(42,53,80,.07);border:1px solid rgba(231,226,215,.6)}
+  .card .ic{width:52px;height:52px;border-radius:14px;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px}
+  .card h3{font-size:19px;margin-bottom:6px}
+  .card p{color:var(--ink2);font-size:15px}
+
+  /* COMPARE */
+  .compare{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 14px 40px rgba(42,53,80,.09);margin-top:40px;border:1px solid var(--line)}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:16px 18px;text-align:center;border-bottom:1px solid var(--line);font-size:15px}
+  th:first-child,td:first-child{text-align:left;font-weight:600}
+  thead th{background:var(--night1);color:#fff;font-weight:600}
+  thead th.us{background:var(--gold-deep)}
+  td.us{background:var(--gold-soft);font-weight:700}
+  .yes{color:var(--ok);font-weight:700}.no{color:#CBD1DE}
+  @media(max-width:700px){th,td{padding:10px;font-size:12px}}
+
+  /* PRICING */
+  .price-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
+  @media(max-width:760px){.price-wrap{grid-template-columns:1fr}}
+  .price{background:#fff;border-radius:20px;padding:34px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(42,53,80,.06)}
+  .price.feat{background:linear-gradient(165deg,var(--night1),var(--night2));color:#fff;border:none;position:relative}
+  .price h3{font-size:22px;margin-bottom:6px}
+  .price .amt{font-size:40px;font-weight:800;margin:10px 0}
+  .price .amt small{font-size:16px;font-weight:500;color:var(--ink2)}
+  .price.feat .amt small{color:#9AA3B8}
+  .price ul{list-style:none;margin:18px 0 26px}
+  .price li{padding:8px 0;padding-left:28px;position:relative;font-size:15px}
+  .price li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:700}
+  .price.feat li::before{color:var(--gold)}
+  .tag{position:absolute;top:22px;right:22px;background:var(--gold);color:#3a2e10;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700}
+
+  /* CTA */
+  .final{background:linear-gradient(160deg,var(--night1),var(--night2));color:#fff;text-align:center;border-radius:24px;padding:70px 30px;margin:0 0 0}
+  .final h2{font-size:38px}
+  .final p{color:#B9C0D0;font-size:18px;max-width:560px;margin:14px auto 30px}
+
+  footer{padding:40px 0;color:var(--ink2);font-size:14px;text-align:center;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">
+      <svg viewBox="0 0 64 64"><path d="M32,5 C21,5 13,11 11,23 C10,32 12,42 16,51 C18,56 20,60 23,60 C26,60 26,53 27,47 C28,42 29,40 32,40 C35,40 36,42 37,47 C38,53 38,60 41,60 C44,60 46,56 48,51 C52,42 54,32 53,23 C51,11 43,5 32,5 Z" fill="#F2EAD7" stroke="#C6A15B" stroke-width="2"/></svg>
+      DentaFlow
+    </div>
+    <nav>
+      <a href="#modules">Modules</a>
+      <a href="#comparatif">Comparatif</a>
+      <a href="#prix">Prix</a>
+      <a href="#telecharger">Télécharger</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="tooth-bg" viewBox="0 0 64 64"><path d="M32,5 C21,5 13,11 11,23 C10,32 12,42 16,51 C18,56 20,60 23,60 C26,60 26,53 27,47 C28,42 29,40 32,40 C35,40 36,42 37,47 C38,53 38,60 41,60 C44,60 46,56 48,51 C52,42 54,32 53,23 C51,11 43,5 32,5 Z" fill="#C6A15B"/></svg>
+  <div class="wrap">
+    <span class="badge">🦷 Conçu pour les chirurgiens-dentistes algériens</span>
+    <h1>Tout votre cabinet.<br><span class="g">Un seul logiciel.</span> Sans internet.</h1>
+    <p>Agenda, patients, devis, ordonnances, stock, laboratoire, caisse et statistiques — tout ce que font les logiciels dentaires les plus chers, réuni et <strong>à un prix algérien</strong>.</p>
+    <div class="cta">
+      <a href="#telecharger" class="btn btn-gold">Essayer 3 jours gratuitement</a>
+      <a href="#modules" class="btn btn-ghost">Voir les modules</a>
+    </div>
+    <p class="note">✓ 100 % hors-ligne  ·  ✓ Installation en 2 minutes  ·  ✓ Vos données restent chez vous</p>
+  </div>
+</section>
+
+<section id="modules">
+  <div class="wrap">
+    <div class="gold-line"></div>
+    <span class="eyebrow">Les modules</span>
+    <h2>Un logiciel complet, pas une demi-solution</h2>
+    <p class="lead">Chaque geste du quotidien, du premier rendez-vous à l'encaissement, dans une interface élégante et rapide.</p>
+    <div class="grid">
+      <div class="card"><div class="ic">📅</div><h3>Agenda</h3><p>Multi-praticiens, création de RDV, statuts en 1 clic, rappels WhatsApp anti no-show.</p></div>
+      <div class="card"><div class="ic">👥</div><h3>Patients</h3><p>Dossier complet, odontogramme interactif, antécédents médicaux avec alertes, soins réalisés, parodontologie.</p></div>
+      <div class="card"><div class="ic">📝</div><h3>Devis &amp; paiements</h3><p>Devis depuis le catalogue d'actes, échéancier, coût matière &amp; marge, impression PDF professionnelle.</p></div>
+      <div class="card"><div class="ic">💊</div><h3>Ordonnances</h3><p>Bibliothèque de prescriptions types, PDF avec en-tête praticien, âge du patient, signature.</p></div>
+      <div class="card"><div class="ic">📦</div><h3>Stock</h3><p>Inventaire, alertes de seuil, consommation par acte, coût de revient réel — vital avec les intrants importés.</p></div>
+      <div class="card"><div class="ic">🔬</div><h3>Laboratoire</h3><p>Fiche navette prothèse (envoyé → reçu → posé), retards signalés, coût labo en cours.</p></div>
+      <div class="card"><div class="ic">💵</div><h3>Caisse</h3><p>Recettes du jour et du mois, encaissement direct, export CSV pour la comptabilité.</p></div>
+      <div class="card"><div class="ic">📊</div><h3>Statistiques</h3><p>Chiffre d'affaires, top des actes, impayés avec relance WhatsApp, patients à rappeler.</p></div>
+      <div class="card"><div class="ic">📱</div><h3>Kiosque patient</h3><p>Le patient scanne un QR à l'accueil et remplit sa demande de rendez-vous sur son téléphone.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="comparatif" style="background:#faf8f3">
+  <div class="wrap">
+    <div class="gold-line"></div>
+    <span class="eyebrow">Le comparatif</span>
+    <h2>Ce que les autres facturent en options, tout est inclus</h2>
+    <div class="compare">
+      <table>
+        <thead><tr><th>Fonctionnalité</th><th>Concurrent A</th><th>Concurrent B</th><th class="us">DentaFlow</th></tr></thead>
+        <tbody>
+          <tr><td>Agenda, patients, devis, ordonnances</td><td class="yes">✓</td><td class="yes">✓</td><td class="us yes">✓</td></tr>
+          <tr><td>Laboratoire / prothèses + retards</td><td class="yes">✓</td><td class="no">✕</td><td class="us yes">✓</td></tr>
+          <tr><td>Impayés + relance WhatsApp</td><td class="no">✕</td><td class="yes">✓</td><td class="us yes">✓</td></tr>
+          <tr><td>Stock + coût de revient par acte</td><td class="yes">✓</td><td class="no">✕</td><td class="us yes">✓</td></tr>
+          <tr><td>Parodontologie + alertes médicales</td><td class="no">✕</td><td class="no">✕</td><td class="us yes">✓</td></tr>
+          <tr><td>Kiosque patient QR</td><td class="yes">✓</td><td class="no">✕</td><td class="us yes">✓</td></tr>
+          <tr><td><strong>100 % hors-ligne</strong></td><td class="no">✕</td><td class="no">✕</td><td class="us yes">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="prix">
+  <div class="wrap">
+    <div class="gold-line"></div>
+    <span class="eyebrow">Le prix</span>
+    <h2>Un tarif pensé pour les cabinets algériens</h2>
+    <p class="lead">Une licence par poste, payée une fois. Pas d'abonnement mensuel qui saigne votre trésorerie.</p>
+    <div class="price-wrap">
+      <div class="price">
+        <h3>Essai gratuit</h3>
+        <div class="amt">0 DA <small>/ 3 jours</small></div>
+        <ul>
+          <li>Toutes les fonctionnalités débloquées</li>
+          <li>Aucune carte, aucun engagement</li>
+          <li>Vos données conservées après achat</li>
+        </ul>
+        <a href="#telecharger" class="btn btn-gold" style="width:100%;text-align:center">Télécharger l'essai</a>
+      </div>
+      <div class="price feat">
+        <span class="tag">Recommandé</span>
+        <h3>Licence Cabinet</h3>
+        <div class="amt">9 000 DA <small>/ poste, à vie</small></div>
+        <ul>
+          <li>Licence perpétuelle, un paiement unique</li>
+          <li>Mises à jour incluses</li>
+          <li>Multi-postes pour les cliniques</li>
+          <li>Support en français</li>
+        </ul>
+        <a href="#telecharger" class="btn btn-gold" style="width:100%;text-align:center">Nous contacter</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="telecharger">
+  <div class="wrap">
+    <div class="final">
+      <h2>Prêt à moderniser votre cabinet ?</h2>
+      <p>Téléchargez DentaFlow, installez-le en 2 minutes et testez tout pendant 3 jours. Sans engagement.</p>
+      <a href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe" class="btn btn-gold">⬇ Télécharger DentaFlow</a>
+      <p style="margin-top:20px;color:#8A93A8;font-size:14px">Windows 10/11 · ~56 Mo · .NET inclus</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    🦷 <strong>DentaFlow</strong> — Logiciel de gestion de cabinet dentaire · Algérie<br>
+    © 2026 DentaFlow. Tous droits réservés.
+  </div>
+</footer>
+
+</body>
+</html>
