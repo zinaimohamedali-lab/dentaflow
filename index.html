@@ -1,138 +1,324 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DentaFlow — Le logiciel du chirurgien-dentiste en Algérie</title>
-<meta name="description" content="Tout ce que font les logiciels dentaires les plus chers, réuni dans un seul logiciel 100% hors-ligne, à un prix algérien. Agenda, patients, devis, ordonnances, stock, labo, caisse, statistiques.">
+<meta name="description" content="Agenda, patients, devis, ordonnances, stock, laboratoire, caisse et statistiques. 100 % hors-ligne, un seul paiement. 12 000 DA pour 3 postes.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='52' font-size='52'>🦷</text></svg>">
 <style>
   :root{
-    --ivory:#F1EFEA; --surface:#fff; --ink:#1E2333; --ink2:#6B7280;
-    --gold:#C6A15B; --gold-deep:#B4903F; --gold-soft:#F2EAD7;
-    --night1:#1E2438; --night2:#12141F; --line:#E7E2D7; --ok:#1FA971;
+    --bg:#F7F5F0; --surface:#FFFFFF; --ink:#171A24; --ink2:#6B7183;
+    --line:#E6E2D8; --gold:#C6A15B; --gold-deep:#B4903F; --gold-soft:#F4EEE1;
+    --night:#12141F; --night2:#1E2438; --ok:#1FA971;
+    --shadow:0 1px 2px rgba(23,26,36,.04), 0 12px 40px rgba(23,26,36,.07);
+    --shadow-lg:0 2px 6px rgba(23,26,36,.06), 0 40px 90px rgba(23,26,36,.16);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --wrap:1180px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
-  body{font-family:'Segoe UI',system-ui,sans-serif;color:var(--ink);background:var(--ivory);line-height:1.6}
-  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-  a{color:inherit;text-decoration:none}
-  .btn{display:inline-block;padding:14px 28px;border-radius:12px;font-weight:600;font-size:16px;transition:.2s;cursor:pointer;border:none}
-  .btn-gold{background:var(--gold-deep);color:#fff;box-shadow:0 8px 22px rgba(180,144,63,.35)}
-  .btn-gold:hover{transform:translateY(-2px)}
-  .btn-ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35)}
-  .btn-ghost:hover{background:rgba(255,255,255,.1)}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);
+       font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 26px}
 
-  /* NAV */
-  header{position:sticky;top:0;z-index:20;background:rgba(241,239,234,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-  header .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
-  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px}
-  .logo svg{width:26px;height:26px}
-  nav a{margin-left:26px;color:var(--ink2);font-size:15px;font-weight:500}
-  nav a:hover{color:var(--gold-deep)}
-  @media(max-width:720px){nav{display:none}}
+  /* ---------- Typographie ---------- */
+  h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.015em;line-height:1.14}
+  h1{font-size:clamp(2.3rem,5.4vw,4.05rem)}
+  h2{font-size:clamp(1.75rem,3.4vw,2.65rem)}
+  h3{font-size:1.16rem;font-family:var(--sans);font-weight:650;letter-spacing:-.01em}
+  .eyebrow{font-size:.735rem;letter-spacing:.22em;text-transform:uppercase;
+           color:var(--gold-deep);font-weight:700}
+  .lead{color:var(--ink2);font-size:1.09rem;max-width:63ch}
+  .rule{width:44px;height:2px;background:var(--gold);border-radius:2px;margin:16px 0 22px}
+  .center{text-align:center}
+  .center .rule,.center .lead{margin-left:auto;margin-right:auto}
 
-  /* HERO */
-  .hero{background:linear-gradient(160deg,var(--night1),var(--night2));color:#fff;padding:90px 0 100px;position:relative;overflow:hidden}
-  .hero .tooth-bg{position:absolute;right:-60px;top:20px;width:460px;opacity:.06}
-  .badge{display:inline-block;background:rgba(198,161,91,.18);color:var(--gold);border:1px solid rgba(198,161,91,.35);padding:7px 16px;border-radius:30px;font-size:13px;font-weight:600;letter-spacing:.3px}
-  .hero h1{font-size:52px;line-height:1.12;margin:22px 0 18px;font-weight:800;letter-spacing:-1px}
-  .hero h1 .g{color:var(--gold)}
-  .hero p{font-size:19px;color:#B9C0D0;max-width:640px;margin-bottom:34px}
-  .hero .cta{display:flex;gap:14px;flex-wrap:wrap}
-  .hero .note{margin-top:18px;color:#8A93A8;font-size:14px}
-  .gold-line{width:54px;height:3px;background:var(--gold);border-radius:2px;margin-bottom:8px}
-  @media(max-width:720px){.hero h1{font-size:36px}}
+  /* ---------- Boutons ---------- */
+  .btn{display:inline-flex;align-items:center;gap:9px;border:1px solid transparent;
+       padding:14px 26px;border-radius:11px;font-weight:650;font-size:.95rem;
+       text-decoration:none;cursor:pointer;transition:transform .18s,box-shadow .18s,background .18s}
+  .btn-gold{background:linear-gradient(180deg,var(--gold) 0%,var(--gold-deep) 100%);color:#fff;
+            box-shadow:0 8px 22px rgba(180,144,63,.32)}
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(180,144,63,.42)}
+  .btn-ghost{border-color:var(--line);background:var(--surface);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--gold);transform:translateY(-2px)}
+  .btn-dark{background:var(--night2);color:#fff}
+  .btn-dark:hover{transform:translateY(-2px)}
 
-  /* SECTIONS */
-  section{padding:80px 0}
-  .eyebrow{color:var(--gold-deep);font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase}
-  h2{font-size:36px;font-weight:800;letter-spacing:-.5px;margin:8px 0 14px}
-  .lead{color:var(--ink2);font-size:18px;max-width:680px}
+  /* ---------- En-tête ---------- */
+  header{position:sticky;top:0;z-index:60;background:rgba(247,245,240,.82);
+         backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid transparent;transition:border-color .3s}
+  header.scrolled{border-bottom-color:var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);
+         font-size:1.32rem;font-weight:650;text-decoration:none;letter-spacing:-.02em}
+  .brand svg{width:25px;height:25px;flex:none}
+  .nav-links{display:flex;gap:30px;align-items:center}
+  .nav-links a{text-decoration:none;color:var(--ink2);font-size:.925rem;font-weight:550;
+               transition:color .2s;position:relative}
+  .nav-links a:hover{color:var(--ink)}
+  .nav-links .btn{padding:10px 20px;font-size:.88rem}
+  @media(max-width:940px){.nav-links a:not(.btn){display:none}}
 
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px}
-  @media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
-  @media(max-width:600px){.grid{grid-template-columns:1fr}}
-  .card{background:var(--surface);border-radius:16px;padding:26px;box-shadow:0 10px 30px rgba(42,53,80,.07);border:1px solid rgba(231,226,215,.6)}
-  .card .ic{width:52px;height:52px;border-radius:14px;background:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:16px}
-  .card h3{font-size:19px;margin-bottom:6px}
-  .card p{color:var(--ink2);font-size:15px}
+  /* ---------- Héros ---------- */
+  .hero{position:relative;padding:74px 0 0;overflow:hidden}
+  .hero::before{content:"";position:absolute;top:-320px;left:50%;transform:translateX(-50%);
+                width:1100px;height:700px;border-radius:50%;
+                background:radial-gradient(ellipse at center,rgba(198,161,91,.17),transparent 68%);
+                pointer-events:none}
+  .hero .wrap{position:relative}
+  .badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-soft);
+         color:var(--gold-deep);border:1px solid #EADFC6;padding:7px 15px;border-radius:100px;
+         font-size:.8rem;font-weight:650;margin-bottom:24px}
+  .hero h1{max-width:16ch}
+  .hero h1 em{font-style:normal;color:var(--gold-deep)}
+  .hero .lead{margin:22px 0 32px;font-size:1.15rem}
+  .cta{display:flex;gap:13px;flex-wrap:wrap}
+  .trust{display:flex;gap:26px;flex-wrap:wrap;margin-top:30px;color:var(--ink2);font-size:.885rem}
+  .trust span{display:flex;align-items:center;gap:7px}
+  .trust svg{width:15px;height:15px;color:var(--ok);flex:none}
 
-  /* COMPARE */
-  .compare{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 14px 40px rgba(42,53,80,.09);margin-top:40px;border:1px solid var(--line)}
-  table{width:100%;border-collapse:collapse}
-  th,td{padding:16px 18px;text-align:center;border-bottom:1px solid var(--line);font-size:15px}
-  th:first-child,td:first-child{text-align:left;font-weight:600}
-  thead th{background:var(--night1);color:#fff;font-weight:600}
-  thead th.us{background:var(--gold-deep)}
-  td.us{background:var(--gold-soft);font-weight:700}
-  .yes{color:var(--ok);font-weight:700}.no{color:#CBD1DE}
-  @media(max-width:700px){th,td{padding:10px;font-size:12px}}
+  /* ---------- Cadre application ---------- */
+  .frame{background:#fff;border:1px solid var(--line);border-radius:15px;overflow:hidden;
+         box-shadow:var(--shadow-lg)}
+  .frame-bar{display:flex;align-items:center;gap:7px;padding:11px 15px;background:#F3F1EC;
+             border-bottom:1px solid var(--line)}
+  .dot{width:10px;height:10px;border-radius:50%;background:#D8D3C7}
+  .frame-title{margin-left:10px;font-size:.76rem;color:var(--ink2);letter-spacing:.02em}
+  .frame img{width:100%;display:block}
 
-  /* PRICING */
-  .price-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px}
-  @media(max-width:760px){.price-wrap{grid-template-columns:1fr}}
-  .price{background:#fff;border-radius:20px;padding:34px;border:1px solid var(--line);box-shadow:0 10px 30px rgba(42,53,80,.06)}
-  .price.feat{background:linear-gradient(165deg,var(--night1),var(--night2));color:#fff;border:none;position:relative}
-  .price h3{font-size:22px;margin-bottom:6px}
-  .price .amt{font-size:40px;font-weight:800;margin:10px 0}
-  .price .amt small{font-size:16px;font-weight:500;color:var(--ink2)}
-  .price.feat .amt small{color:#9AA3B8}
-  .price ul{list-style:none;margin:18px 0 26px}
-  .price li{padding:8px 0;padding-left:28px;position:relative;font-size:15px}
-  .price li::before{content:"✓";position:absolute;left:0;color:var(--gold);font-weight:700}
-  .price.feat li::before{color:var(--gold)}
-  .tag{position:absolute;top:22px;right:22px;background:var(--gold);color:#3a2e10;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:700}
+  .hero-shot{margin-top:58px;position:relative}
+  .hero-shot .frame{transform:perspective(2200px) rotateX(2.4deg)}
 
-  /* CTA */
-  .final{background:linear-gradient(160deg,var(--night1),var(--night2));color:#fff;text-align:center;border-radius:24px;padding:70px 30px;margin:0 0 0}
-  .final h2{font-size:38px}
-  .final p{color:#B9C0D0;font-size:18px;max-width:560px;margin:14px auto 30px}
+  /* ---------- Sections ---------- */
+  section{padding:96px 0}
+  .band{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 
-  footer{padding:40px 0;color:var(--ink2);font-size:14px;text-align:center;border-top:1px solid var(--line)}
+  /* ---------- Lecteur tutoriel ---------- */
+  .player{display:grid;grid-template-columns:1fr 322px;gap:28px;margin-top:44px;align-items:start}
+  @media(max-width:960px){.player{grid-template-columns:1fr}}
+  .screen{position:relative;background:var(--night);border-radius:15px;overflow:hidden;
+          box-shadow:var(--shadow-lg);border:1px solid #23283C}
+  .screen-stage{position:relative;aspect-ratio:1440/900;background:var(--night)}
+  .screen-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+                    opacity:0;transition:opacity .55s ease}
+  .screen-stage img.on{opacity:1}
+  .caption{position:absolute;left:0;right:0;bottom:0;padding:44px 24px 20px;
+           background:linear-gradient(transparent,rgba(9,10,16,.9) 55%);color:#fff}
+  .caption .step{font-size:.71rem;letter-spacing:.2em;text-transform:uppercase;
+                 color:var(--gold);font-weight:700}
+  .caption h4{font-family:var(--serif);font-size:1.4rem;font-weight:600;margin:5px 0 3px}
+  .caption p{font-size:.9rem;color:#C7CAD6;max-width:60ch}
+  .bar{height:3px;background:rgba(255,255,255,.16)}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),#E3C98C)}
+  .controls{display:flex;align-items:center;gap:14px;padding:12px 16px;background:#171A28}
+  .ctrl{width:38px;height:38px;border-radius:50%;border:1px solid #2E3448;background:#1F2436;
+        color:#fff;cursor:pointer;display:grid;place-items:center;transition:.2s;flex:none}
+  .ctrl:hover{background:var(--gold-deep);border-color:var(--gold-deep)}
+  .ctrl svg{width:15px;height:15px}
+  .counter{color:#8A90A6;font-size:.82rem;font-variant-numeric:tabular-nums;margin-left:auto}
+
+  .steps{background:var(--surface);border:1px solid var(--line);border-radius:15px;
+         padding:9px;box-shadow:var(--shadow);max-height:none}
+  .step-btn{display:flex;gap:13px;align-items:flex-start;width:100%;text-align:left;
+            background:none;border:0;padding:11px 12px;border-radius:10px;cursor:pointer;
+            font:inherit;color:var(--ink2);transition:.18s}
+  .step-btn:hover{background:var(--bg)}
+  .step-btn.on{background:var(--gold-soft);color:var(--ink)}
+  .step-btn .n{width:25px;height:25px;border-radius:50%;background:var(--bg);color:var(--ink2);
+               display:grid;place-items:center;font-size:.76rem;font-weight:700;flex:none;
+               border:1px solid var(--line)}
+  .step-btn.on .n{background:var(--gold-deep);color:#fff;border-color:var(--gold-deep)}
+  .step-btn b{display:block;font-size:.9rem;font-weight:650;color:var(--ink);line-height:1.4}
+  .step-btn small{font-size:.79rem;line-height:1.45;display:block}
+
+  /* ---------- Modules ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:16px;margin-top:44px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 24px;
+        transition:transform .2s,box-shadow .2s,border-color .2s}
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:#DCD5C3}
+  .card .ic{width:42px;height:42px;border-radius:11px;background:var(--gold-soft);
+            display:grid;place-items:center;font-size:1.2rem;margin-bottom:15px}
+  .card p{color:var(--ink2);font-size:.9rem;margin-top:7px}
+
+  /* ---------- Comparatif ---------- */
+  .tablebox{margin-top:40px;background:var(--surface);border:1px solid var(--line);
+            border-radius:14px;overflow-x:auto;box-shadow:var(--shadow)}
+  table{width:100%;border-collapse:collapse;min-width:620px}
+  th,td{padding:15px 20px;text-align:left;border-bottom:1px solid var(--line);font-size:.92rem}
+  thead th{font-size:.73rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ink2);
+           font-weight:700;background:#FBFAF7}
+  tbody tr:last-child td{border-bottom:0}
+  td.c,th.c{text-align:center;width:126px}
+  .us{background:rgba(198,161,91,.07)}
+  th.us{color:var(--gold-deep)}
+  .yes{color:var(--ok);font-weight:700}
+  .no{color:#CBC7BC}
+
+  /* ---------- Licence cabinet ---------- */
+  .lan{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;margin-top:44px}
+  @media(max-width:900px){.lan{grid-template-columns:1fr;gap:32px}}
+  .lan ol{margin:22px 0 0;padding-left:0;list-style:none;counter-reset:s}
+  .lan li{counter-increment:s;position:relative;padding-left:46px;margin-bottom:20px}
+  .lan li::before{content:counter(s);position:absolute;left:0;top:-1px;width:30px;height:30px;
+                  border-radius:50%;background:var(--night2);color:var(--gold);display:grid;
+                  place-items:center;font-size:.83rem;font-weight:700;font-family:var(--sans)}
+  .lan li b{display:block;margin-bottom:2px}
+  .lan li span{color:var(--ink2);font-size:.92rem}
+  .diagram{background:var(--night);border-radius:15px;padding:34px 28px;color:#fff;
+           box-shadow:var(--shadow-lg)}
+  .pc{display:flex;align-items:center;gap:14px;background:#1B2032;border:1px solid #2B3149;
+      border-radius:12px;padding:15px 17px;margin-bottom:11px}
+  .pc.pilot{border-color:var(--gold-deep);background:linear-gradient(90deg,rgba(180,144,63,.18),#1B2032)}
+  .pc .ic{width:36px;height:36px;border-radius:9px;background:#252B41;display:grid;
+          place-items:center;font-size:1.05rem;flex:none}
+  .pc.pilot .ic{background:var(--gold-deep)}
+  .pc b{font-size:.93rem;display:block}
+  .pc small{color:#9AA0B4;font-size:.79rem}
+  .pc .tag{margin-left:auto;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+           color:var(--gold);font-weight:700}
+  .link-lan{text-align:center;color:#6E7690;font-size:.78rem;margin:4px 0 11px;letter-spacing:.08em}
+
+  /* ---------- Prix ---------- */
+  .prices{display:grid;grid-template-columns:1fr 1.12fr;gap:22px;margin-top:46px;align-items:stretch}
+  @media(max-width:820px){.prices{grid-template-columns:1fr}}
+  .price{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:34px 30px;
+         display:flex;flex-direction:column}
+  .price.feat{border-color:var(--gold);box-shadow:0 2px 8px rgba(180,144,63,.1),0 30px 70px rgba(180,144,63,.15);
+              position:relative}
+  .tag-top{position:absolute;top:-12px;left:30px;background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+           color:#fff;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700;
+           padding:5px 14px;border-radius:100px}
+  .amt{font-family:var(--serif);font-size:2.75rem;font-weight:600;letter-spacing:-.02em;margin:12px 0 4px}
+  .amt small{font-family:var(--sans);font-size:.92rem;font-weight:500;color:var(--ink2);letter-spacing:0}
+  .price ul{list-style:none;margin:20px 0 26px}
+  .price li{display:flex;gap:11px;align-items:flex-start;padding:7px 0;font-size:.93rem}
+  .price li svg{width:16px;height:16px;color:var(--ok);flex:none;margin-top:4px}
+  .price .btn{margin-top:auto;justify-content:center}
+  .addon{margin-top:14px;padding-top:16px;border-top:1px dashed var(--line);
+         font-size:.87rem;color:var(--ink2)}
+  .addon b{color:var(--ink)}
+
+  /* ---------- Final ---------- */
+  .final{background:var(--night);border-radius:20px;padding:76px 40px;text-align:center;color:#fff;
+         position:relative;overflow:hidden}
+  .final::before{content:"";position:absolute;top:-160px;left:50%;transform:translateX(-50%);
+                 width:760px;height:420px;border-radius:50%;
+                 background:radial-gradient(ellipse,rgba(198,161,91,.26),transparent 70%)}
+  .final>*{position:relative}
+  .final h2{color:#fff}
+  .final p{color:#A9AFC2;margin:16px auto 32px;max-width:52ch}
+  .final .meta{color:#6E7690;font-size:.83rem;margin-top:20px}
+
+  footer{border-top:1px solid var(--line);padding:44px 0;color:var(--ink2);font-size:.9rem}
+  .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+  .foot a{color:var(--gold-deep);text-decoration:none;font-weight:600}
+  .foot a:hover{text-decoration:underline}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    html{scroll-behavior:auto}
+    .hero-shot .frame{transform:none}
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <div class="logo">
-      <svg viewBox="0 0 64 64"><path d="M32,5 C21,5 13,11 11,23 C10,32 12,42 16,51 C18,56 20,60 23,60 C26,60 26,53 27,47 C28,42 29,40 32,40 C35,40 36,42 37,47 C38,53 38,60 41,60 C44,60 46,56 48,51 C52,42 54,32 53,23 C51,11 43,5 32,5 Z" fill="#F2EAD7" stroke="#C6A15B" stroke-width="2"/></svg>
+<header id="hd">
+  <div class="wrap nav">
+    <a class="brand" href="#">
+      <svg viewBox="0 0 64 64" fill="none"><path d="M32,5 C21,5 13,11 11,23 C10,32 12,42 16,51 C18,56 20,60 23,60 C26,60 26,53 27,47 C28,42 29,40 32,40 C35,40 36,42 37,47 C38,53 38,60 41,60 C44,60 46,56 48,51 C52,42 54,32 53,23 C51,11 43,5 32,5 Z" fill="#F4EEE1" stroke="#C6A15B" stroke-width="2.4"/></svg>
       DentaFlow
-    </div>
-    <nav>
+    </a>
+    <nav class="nav-links">
+      <a href="#tutoriel">Démonstration</a>
       <a href="#modules">Modules</a>
-      <a href="#comparatif">Comparatif</a>
+      <a href="#cabinet">Multi-postes</a>
       <a href="#prix">Prix</a>
-      <a href="#telecharger">Télécharger</a>
+      <a class="btn btn-gold" href="#telecharger">Télécharger</a>
     </nav>
   </div>
 </header>
 
-<section class="hero">
-  <svg class="tooth-bg" viewBox="0 0 64 64"><path d="M32,5 C21,5 13,11 11,23 C10,32 12,42 16,51 C18,56 20,60 23,60 C26,60 26,53 27,47 C28,42 29,40 32,40 C35,40 36,42 37,47 C38,53 38,60 41,60 C44,60 46,56 48,51 C52,42 54,32 53,23 C51,11 43,5 32,5 Z" fill="#C6A15B"/></svg>
+<!-- ===================== HÉROS ===================== -->
+<div class="hero">
   <div class="wrap">
     <span class="badge">🦷 Conçu pour les chirurgiens-dentistes algériens</span>
-    <h1>Tout votre cabinet.<br><span class="g">Un seul logiciel.</span> Sans internet.</h1>
-    <p>Agenda, patients, devis, ordonnances, stock, laboratoire, caisse et statistiques — tout ce que font les logiciels dentaires les plus chers, réuni et <strong>à un prix algérien</strong>.</p>
+    <h1>Tout votre cabinet.<br><em>Un seul logiciel.</em></h1>
+    <p class="lead">Agenda, patients, devis, ordonnances, stock, laboratoire, caisse et statistiques —
+      tout ce que font les logiciels dentaires les plus chers, réuni dans un logiciel qui
+      fonctionne <strong>sans internet</strong> et se paie <strong>une seule fois</strong>.</p>
     <div class="cta">
-      <a href="#telecharger" class="btn btn-gold">Essayer 3 jours gratuitement</a>
-      <a href="#modules" class="btn btn-ghost">Voir les modules</a>
+      <a class="btn btn-gold" href="#telecharger">Essayer 3 jours gratuitement</a>
+      <a class="btn btn-ghost" href="#tutoriel">▶ Voir la démonstration</a>
     </div>
-    <p class="note">✓ 100 % hors-ligne  ·  ✓ 3 postes inclus  ·  ✓ Installation en 2 minutes  ·  ✓ Vos données restent chez vous</p>
+    <div class="trust">
+      <span><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> 100 % hors-ligne</span>
+      <span><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> 3 postes inclus</span>
+      <span><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> Installation en 2 minutes</span>
+      <span><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> Vos données restent chez vous</span>
+    </div>
+    <div class="hero-shot reveal">
+      <div class="frame">
+        <div class="frame-bar"><i class="dot"></i><i class="dot"></i><i class="dot"></i>
+          <span class="frame-title">DentaFlow — Gestion de cabinet dentaire</span></div>
+        <img src="captures/01-tableau-de-bord.png" alt="Tableau de bord de DentaFlow" width="1440" height="900">
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== TUTORIEL ===================== -->
+<section id="tutoriel" class="band">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="eyebrow">La démonstration</span>
+      <h2>Découvrez DentaFlow en 9 étapes</h2>
+      <div class="rule" style="margin-left:auto;margin-right:auto"></div>
+      <p class="lead">Un tour complet du logiciel, écran par écran. Ce sont de véritables captures —
+        exactement ce que vous verrez après l'installation.</p>
+    </div>
+
+    <div class="player reveal">
+      <div class="screen">
+        <div class="screen-stage" id="stage"></div>
+        <div class="bar"><i id="prog"></i></div>
+        <div class="controls">
+          <button class="ctrl" id="prev" aria-label="Étape précédente" title="Précédent">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M13 4 6 10l7 6z"/></svg></button>
+          <button class="ctrl" id="play" aria-label="Lecture / pause" title="Lecture / pause">
+            <svg id="ico" viewBox="0 0 20 20" fill="currentColor"><path d="M6 4h3v12H6zM11 4h3v12h-3z"/></svg></button>
+          <button class="ctrl" id="next" aria-label="Étape suivante" title="Suivant">
+            <svg viewBox="0 0 20 20" fill="currentColor"><path d="M7 4l7 6-7 6z"/></svg></button>
+          <span class="counter"><b id="cur">1</b> / 9</span>
+        </div>
+      </div>
+      <div class="steps" id="steps"></div>
+    </div>
   </div>
 </section>
 
+<!-- ===================== MODULES ===================== -->
 <section id="modules">
   <div class="wrap">
-    <div class="gold-line"></div>
-    <span class="eyebrow">Les modules</span>
-    <h2>Un logiciel complet, pas une demi-solution</h2>
-    <p class="lead">Chaque geste du quotidien, du premier rendez-vous à l'encaissement, dans une interface élégante et rapide.</p>
-    <div class="grid">
-      <div class="card"><div class="ic">📅</div><h3>Agenda</h3><p>Multi-praticiens, création de RDV, statuts en 1 clic, rappels WhatsApp anti no-show.</p></div>
-      <div class="card"><div class="ic">👥</div><h3>Patients</h3><p>Dossier complet, odontogramme interactif, antécédents médicaux avec alertes, soins réalisés, parodontologie.</p></div>
-      <div class="card"><div class="ic">📝</div><h3>Devis &amp; paiements</h3><p>Devis depuis le catalogue d'actes, échéancier, coût matière &amp; marge, impression PDF professionnelle.</p></div>
-      <div class="card"><div class="ic">💊</div><h3>Ordonnances</h3><p>Bibliothèque de prescriptions types, PDF avec en-tête praticien, âge du patient, signature.</p></div>
+    <div class="reveal">
+      <span class="eyebrow">Les modules</span>
+      <h2>Un logiciel complet, pas une demi-solution</h2>
+      <div class="rule"></div>
+      <p class="lead">Chaque geste du quotidien, du premier rendez-vous à l'encaissement,
+        dans une interface soignée et rapide.</p>
+    </div>
+    <div class="grid reveal">
+      <div class="card"><div class="ic">📅</div><h3>Agenda</h3><p>Multi-praticiens, création de rendez-vous, statuts en un clic, rappels WhatsApp anti no-show.</p></div>
+      <div class="card"><div class="ic">👥</div><h3>Patients</h3><p>Dossier complet, odontogramme interactif, antécédents médicaux avec alertes, parodontologie.</p></div>
+      <div class="card"><div class="ic">📝</div><h3>Devis &amp; paiements</h3><p>Devis depuis le catalogue d'actes, échéancier, coût matière et marge, impression PDF professionnelle.</p></div>
+      <div class="card"><div class="ic">💊</div><h3>Ordonnances</h3><p>Bibliothèque de prescriptions types, PDF à en-tête du praticien, âge du patient, signature.</p></div>
       <div class="card"><div class="ic">📦</div><h3>Stock</h3><p>Inventaire, alertes de seuil, consommation par acte, coût de revient réel — vital avec les intrants importés.</p></div>
       <div class="card"><div class="ic">🔬</div><h3>Laboratoire</h3><p>Fiche navette prothèse (envoyé → reçu → posé), retards signalés, coût labo en cours.</p></div>
       <div class="card"><div class="ic">💵</div><h3>Caisse</h3><p>Recettes du jour et du mois, encaissement direct, export CSV pour la comptabilité.</p></div>
@@ -142,81 +328,222 @@
   </div>
 </section>
 
-<section id="comparatif" style="background:#faf8f3">
+<!-- ===================== COMPARATIF ===================== -->
+<section class="band">
   <div class="wrap">
-    <div class="gold-line"></div>
-    <span class="eyebrow">Le comparatif</span>
-    <h2>Ce que les autres facturent en options, tout est inclus</h2>
-    <div class="compare">
+    <div class="reveal">
+      <span class="eyebrow">Le comparatif</span>
+      <h2>Ce que les autres facturent en options, tout est inclus</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="tablebox reveal">
       <table>
-        <thead><tr><th>Fonctionnalité</th><th>Concurrent A</th><th>Concurrent B</th><th class="us">DentaFlow</th></tr></thead>
+        <thead><tr><th>Fonctionnalité</th><th class="c">Concurrent A</th><th class="c">Concurrent B</th><th class="c us">DentaFlow</th></tr></thead>
         <tbody>
-          <tr><td>Agenda, patients, devis, ordonnances</td><td class="yes">✓</td><td class="yes">✓</td><td class="us yes">✓</td></tr>
-          <tr><td>Laboratoire / prothèses + retards</td><td class="yes">✓</td><td class="no">✕</td><td class="us yes">✓</td></tr>
-          <tr><td>Impayés + relance WhatsApp</td><td class="no">✕</td><td class="yes">✓</td><td class="us yes">✓</td></tr>
-          <tr><td>Stock + coût de revient par acte</td><td class="yes">✓</td><td class="no">✕</td><td class="us yes">✓</td></tr>
-          <tr><td>Parodontologie + alertes médicales</td><td class="no">✕</td><td class="no">✕</td><td class="us yes">✓</td></tr>
-          <tr><td>Kiosque patient QR</td><td class="yes">✓</td><td class="no">✕</td><td class="us yes">✓</td></tr>
-          <tr><td><strong>100 % hors-ligne</strong></td><td class="no">✕</td><td class="no">✕</td><td class="us yes">✓</td></tr>
-          <tr><td><strong>3 postes inclus dans le prix</strong></td><td class="no">✕</td><td class="no">✕</td><td class="us yes">✓</td></tr>
+          <tr><td>Agenda, patients, devis, ordonnances</td><td class="c yes">✓</td><td class="c yes">✓</td><td class="c us yes">✓</td></tr>
+          <tr><td>Laboratoire / prothèses + retards</td><td class="c yes">✓</td><td class="c no">✕</td><td class="c us yes">✓</td></tr>
+          <tr><td>Impayés + relance WhatsApp</td><td class="c no">✕</td><td class="c yes">✓</td><td class="c us yes">✓</td></tr>
+          <tr><td>Stock + coût de revient par acte</td><td class="c yes">✓</td><td class="c no">✕</td><td class="c us yes">✓</td></tr>
+          <tr><td>Parodontologie + alertes médicales</td><td class="c no">✕</td><td class="c no">✕</td><td class="c us yes">✓</td></tr>
+          <tr><td>Kiosque patient QR</td><td class="c yes">✓</td><td class="c no">✕</td><td class="c us yes">✓</td></tr>
+          <tr><td><strong>100 % hors-ligne</strong></td><td class="c no">✕</td><td class="c no">✕</td><td class="c us yes">✓</td></tr>
+          <tr><td><strong>3 postes inclus dans le prix</strong></td><td class="c no">✕</td><td class="c no">✕</td><td class="c us yes">✓</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 </section>
 
-<section id="prix">
+<!-- ===================== LICENCE CABINET ===================== -->
+<section id="cabinet">
   <div class="wrap">
-    <div class="gold-line"></div>
-    <span class="eyebrow">Le prix</span>
-    <h2>Un tarif pensé pour les cabinets algériens</h2>
-    <p class="lead">Une seule licence pour tout le cabinet, payée une fois. Pas d'abonnement mensuel qui saigne votre trésorerie.</p>
-    <p class="lead" style="margin-top:-8px">Un seul code à activer sur le PC principal — les autres postes se connectent tout seuls.</p>
-    <div class="price-wrap">
-      <div class="price">
-        <h3>Essai gratuit</h3>
-        <div class="amt">0 DA <small>/ 3 jours</small></div>
-        <ul>
-          <li>Toutes les fonctionnalités débloquées</li>
-          <li>Aucune carte, aucun engagement</li>
-          <li>Vos données conservées après achat</li>
-        </ul>
-        <a href="#telecharger" class="btn btn-gold" style="width:100%;text-align:center">Télécharger l'essai</a>
+    <div class="reveal">
+      <span class="eyebrow">Multi-postes</span>
+      <h2>Un seul code pour tout le cabinet</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="lan">
+      <div class="reveal">
+        <p class="lead">Vous activez <strong>un seul code</strong> sur le PC principal.
+          Les autres postes du cabinet se connectent <strong>tout seuls</strong>, sans code,
+          et partagent les mêmes dossiers patients en temps réel.</p>
+        <ol>
+          <li><b>Activez le PC principal</b><span>Collez votre code d'activation : ce poste devient le « pilote » du cabinet.</span></li>
+          <li><b>Partagez le dossier de données</b><span>Dans Paramètres, choisissez un dossier et partagez-le sur votre réseau.</span></li>
+          <li><b>Les autres postes rejoignent</b><span>Un clic sur « Rejoindre le cabinet » : aucun code à saisir, aucune configuration.</span></li>
+        </ol>
       </div>
-      <div class="price feat">
-        <span class="tag">Recommandé</span>
-        <h3>Licence Cabinet</h3>
-        <div class="amt">12 000 DA <small>/ 3 postes, à vie</small></div>
-        <ul>
-          <li><strong>3 postes inclus</strong> : Gérant, Assistante, Praticien</li>
-          <li>Poste supplémentaire : <strong>+3 000 DA</strong></li>
-          <li>Licence perpétuelle, un paiement unique</li>
-          <li>Mises à jour incluses · Support en français</li>
-        </ul>
-        <a href="https://wa.me/213676538803?text=Bonjour%2C%20je%20souhaite%20acheter%20une%20licence%20DentaFlow" target="_blank" rel="noopener" class="btn btn-gold" style="width:100%;text-align:center">📱 Commander sur WhatsApp</a>
+      <div class="diagram reveal">
+        <div class="pc pilot"><div class="ic">🖥️</div><div><b>PC principal</b><small>Accueil — code activé</small></div><span class="tag">Pilote</span></div>
+        <div class="link-lan">▼ &nbsp; réseau local du cabinet &nbsp; ▼</div>
+        <div class="pc"><div class="ic">💻</div><div><b>Poste praticien</b><small>Fauteuil 1 — connecté automatiquement</small></div></div>
+        <div class="pc"><div class="ic">💻</div><div><b>Poste assistante</b><small>Stérilisation — connecté automatiquement</small></div></div>
+        <div class="pc" style="opacity:.6"><div class="ic">➕</div><div><b>Poste supplémentaire</b><small>+3 000 DA, à vie</small></div></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ===================== PRIX ===================== -->
+<section id="prix" class="band">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="eyebrow">Le prix</span>
+      <h2>Un tarif pensé pour les cabinets algériens</h2>
+      <div class="rule"></div>
+      <p class="lead">Payé une seule fois. Pas d'abonnement mensuel qui saigne votre trésorerie.</p>
+    </div>
+    <div class="prices reveal">
+      <div class="price">
+        <h3>Essai gratuit</h3>
+        <div class="amt">0 DA <small>/ 3 jours</small></div>
+        <ul>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> Toutes les fonctionnalités débloquées</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> Aucune carte, aucun engagement</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> Vos données conservées après achat</li>
+        </ul>
+        <a class="btn btn-ghost" href="#telecharger">Télécharger l'essai</a>
+      </div>
+      <div class="price feat">
+        <span class="tag-top">Recommandé</span>
+        <h3>Licence Cabinet</h3>
+        <div class="amt">12 000 DA <small>/ 3 postes, à vie</small></div>
+        <ul>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> <span><strong>3 postes inclus</strong> : Gérant, Assistante, Praticien</span></li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> Licence perpétuelle, un paiement unique</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> Mises à jour incluses</li>
+          <li><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> Support en français</li>
+        </ul>
+        <div class="addon" style="margin-bottom:22px">Besoin de plus de postes ? <b>+3 000 DA</b> par poste supplémentaire, à vie.</div>
+        <a class="btn btn-gold" target="_blank" rel="noopener"
+           href="https://wa.me/213676538803?text=Bonjour%2C%20je%20souhaite%20acheter%20une%20licence%20DentaFlow">
+          📱 Commander sur WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TÉLÉCHARGEMENT ===================== -->
 <section id="telecharger">
   <div class="wrap">
-    <div class="final">
+    <div class="final reveal">
       <h2>Prêt à moderniser votre cabinet ?</h2>
-      <p>Téléchargez DentaFlow, installez-le en 2 minutes et testez tout pendant 3 jours. Sans engagement.</p>
-      <a href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe" class="btn btn-gold">⬇ Télécharger DentaFlow</a>
-      <p style="margin-top:20px;color:#8A93A8;font-size:14px">Windows 10/11 · ~56 Mo · .NET inclus</p>
+      <p>Téléchargez DentaFlow, installez-le en deux minutes et testez tout pendant 3 jours.
+         Sans engagement, sans carte bancaire.</p>
+      <a class="btn btn-gold" href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe">⬇ Télécharger DentaFlow</a>
+      <div class="meta">Windows 10 / 11 · ~56 Mo · .NET inclus · Aucun droit administrateur requis</div>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="wrap">
-    🦷 <strong>DentaFlow</strong> — Logiciel de gestion de cabinet dentaire · Algérie<br>
-    📱 WhatsApp : <a href="https://wa.me/213676538803" target="_blank" rel="noopener" style="color:#C6A15B;text-decoration:none">+213 676 53 88 03</a><br>
-    © 2026 DentaFlow. Tous droits réservés.
+  <div class="wrap foot">
+    <div>🦷 <strong>DentaFlow</strong> — Gestion de cabinet dentaire · Algérie<br>
+      <span style="font-size:.85rem">© 2026 DentaFlow. Tous droits réservés.</span></div>
+    <div>📱 WhatsApp : <a href="https://wa.me/213676538803" target="_blank" rel="noopener">+213 676 53 88 03</a></div>
   </div>
 </footer>
 
+<script>
+(function(){
+  "use strict";
+  var etapes = [
+    ["01-tableau-de-bord","Tableau de bord","Votre journée en un coup d'œil : recette encaissée, rendez-vous, devis en attente et alertes de stock."],
+    ["02-agenda","Agenda","Planifiez les rendez-vous par praticien et changez leur statut en un clic. Rappel WhatsApp pour éviter les absences."],
+    ["03-patients","Patients","Dossier complet avec odontogramme, antécédents médicaux et historique des soins. Recherche instantanée."],
+    ["04-devis","Devis & paiements","Composez le devis depuis votre catalogue d'actes, suivez les règlements et repérez les impayés."],
+    ["05-ordonnances","Ordonnances","Prescriptions types en un clic, PDF à l'en-tête du praticien, prêt à imprimer et à signer."],
+    ["06-laboratoire","Laboratoire","Suivez chaque prothèse : envoyée, reçue, posée. Les retards passent en rouge automatiquement."],
+    ["07-stock","Stock","Inventaire des consommables, alertes de seuil et coût de revient réel par acte."],
+    ["08-caisse","Caisse","Journal des encaissements du jour et du mois, exportable en CSV pour votre comptable."],
+    ["09-statistiques","Statistiques","Chiffre d'affaires sur 6 mois, actes les plus rentables, impayés et patients à rappeler."]
+  ];
+  var DUREE = 5200, i = 0, lecture = true, t0 = 0, raf = null;
+  var stage = document.getElementById('stage'),
+      steps = document.getElementById('steps'),
+      prog  = document.getElementById('prog'),
+      cur   = document.getElementById('cur'),
+      ico   = document.getElementById('ico');
+  if (!stage) return;
+
+  var imgs = etapes.map(function(e, n){
+    var im = document.createElement('img');
+    im.src = 'captures/' + e[0] + '.png';
+    im.alt = 'DentaFlow — ' + e[1];
+    im.loading = n === 0 ? 'eager' : 'lazy';
+    im.width = 1440; im.height = 900;
+    stage.appendChild(im);
+    return im;
+  });
+
+  var cap = document.createElement('div');
+  cap.className = 'caption';
+  cap.innerHTML = '<div class="step"></div><h4></h4><p></p>';
+  stage.appendChild(cap);
+  var cStep = cap.querySelector('.step'), cTit = cap.querySelector('h4'), cTxt = cap.querySelector('p');
+
+  var boutons = etapes.map(function(e, n){
+    var b = document.createElement('button');
+    b.className = 'step-btn';
+    b.type = 'button';
+    b.innerHTML = '<span class="n">' + (n+1) + '</span><span><b>' + e[1] + '</b><small>' + e[2] + '</small></span>';
+    b.addEventListener('click', function(){ aller(n); });
+    steps.appendChild(b);
+    return b;
+  });
+
+  function peindre(){
+    imgs.forEach(function(im, n){ im.classList.toggle('on', n === i); });
+    boutons.forEach(function(b, n){ b.classList.toggle('on', n === i); });
+    cStep.textContent = 'Étape ' + (i+1) + ' sur ' + etapes.length;
+    cTit.textContent = etapes[i][1];
+    cTxt.textContent = etapes[i][2];
+    cur.textContent = i + 1;
+  }
+  function aller(n){ i = (n + etapes.length) % etapes.length; t0 = performance.now(); peindre(); }
+
+  function boucle(ts){
+    if (!t0) t0 = ts;
+    var p = Math.min(1, (ts - t0) / DUREE);
+    prog.style.width = (p * 100) + '%';
+    if (p >= 1) aller(i + 1);
+    raf = requestAnimationFrame(boucle);
+  }
+  function jouer(on){
+    lecture = on;
+    ico.innerHTML = on ? '<path d="M6 4h3v12H6zM11 4h3v12h-3z"/>' : '<path d="M6 4l10 6-10 6z"/>';
+    if (on){ t0 = performance.now() - 0; raf = requestAnimationFrame(boucle); }
+    else { cancelAnimationFrame(raf); raf = null; }
+  }
+
+  document.getElementById('play').addEventListener('click', function(){ jouer(!lecture); });
+  document.getElementById('next').addEventListener('click', function(){ aller(i + 1); if(!lecture) prog.style.width='0'; });
+  document.getElementById('prev').addEventListener('click', function(){ aller(i - 1); if(!lecture) prog.style.width='0'; });
+
+  peindre();
+  var reduit = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduit) { jouer(false); prog.style.width = '100%'; }
+  else {
+    // On ne lance la lecture que lorsque le lecteur est visible.
+    if ('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        es.forEach(function(e){ if (e.isIntersecting && !raf && lecture) jouer(true);
+                                else if (!e.isIntersecting && raf) { cancelAnimationFrame(raf); raf = null; } });
+      }, {threshold:.25}).observe(stage);
+    } else jouer(true);
+  }
+
+  // Apparition au défilement
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+
+  var hd = document.getElementById('hd');
+  addEventListener('scroll', function(){ hd.classList.toggle('scrolled', scrollY > 8); }, {passive:true});
+})();
+</script>
 </body>
 </html>
