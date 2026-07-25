@@ -8,7 +8,7 @@
 [![Télécharger](https://img.shields.io/badge/⬇_Télécharger-DentaFlow_Setup-C6A15B?style=for-the-badge)](../../releases/latest)
 &nbsp;
 ![Windows](https://img.shields.io/badge/Windows-10_/_11-1E2438?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-1.1.0-B4903F?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.2.0-B4903F?style=for-the-badge)
 
 </div>
 
@@ -21,13 +21,14 @@ DentaFlow réunit tout ce que font les logiciels dentaires les plus chers — **
 | | |
 |---|---|
 | **Essai gratuit** | **3 jours** — toutes fonctions débloquées, sans engagement |
-| **Licence Cabinet** | **9 000 DA / cabinet, à vie** — **postes illimités** sur votre réseau local |
+| **Licence Cabinet** | **12 000 DA à vie** — **3 postes inclus** (Gérant, Assistante, Praticien) |
+| **Poste supplémentaire** | **+3 000 DA** par poste, à vie |
 
 > Pas d'abonnement mensuel. Vos données restent chez vous.
 
 ### 🖥️ Une seule licence pour tout le cabinet
 
-Vous achetez **un seul code**, que vous activez sur le **PC principal (« pilote »)**. Tous les autres postes du cabinet s'activent **automatiquement**, sans code : il suffit d'indiquer le dossier partagé du pilote (**🔗 Rejoindre le cabinet**).
+Vous achetez **un seul code**, que vous activez sur le **PC principal (« pilote »)**. Les autres postes s'activent **automatiquement**, sans code : il suffit d'indiquer le dossier partagé du pilote (**🔗 Rejoindre le cabinet**).
 
 Si le pilote est éteint, les autres postes continuent de fonctionner **72 heures** avant de se bloquer.
 
@@ -50,7 +51,7 @@ Si le pilote est éteint, les autres postes continuent de fonctionner **72 heure
 - **Rôles & permissions** — le Gérant accorde les accès ; données financières et prix d'achat protégés.
 - **Code PIN** par utilisateur + changement obligatoire au 1ᵉʳ accès + **journal d'activité**.
 - **Multi-postes clinique** — base partagée sur le réseau local, synchronisation automatique.
-- **Licence de cabinet** (signature ECDSA P-256, battement de cœur signé par le pilote) — postes illimités sur le LAN, protection anti-copie.
+- **Licence de cabinet** (signature ECDSA P-256, battement de cœur signé par le pilote) — nombre de postes inscrit dans le code, protection anti-copie.
 - **Installateur signé** — éditeur « DentaFlow DZ », horodaté.
 
 ## 🖥️ Installation
