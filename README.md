@@ -8,7 +8,7 @@
 [![Télécharger](https://img.shields.io/badge/⬇_Télécharger-DentaFlow_Setup-C6A15B?style=for-the-badge)](../../releases/latest)
 &nbsp;
 ![Windows](https://img.shields.io/badge/Windows-10_/_11-1E2438?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-1.2.2-B4903F?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.2.3-B4903F?style=for-the-badge)
 
 </div>
 
