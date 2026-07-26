@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="utf-8">
@@ -91,12 +91,39 @@
   .frame-title{margin-left:10px;font-size:.76rem;color:var(--ink2);letter-spacing:.02em}
   .frame img{width:100%;display:block}
 
+  /* Aucune transformation 3D ici : elle écraserait la capture verticalement. */
   .hero-shot{margin-top:58px;position:relative}
-  .hero-shot .frame{transform:perspective(2200px) rotateX(2.4deg)}
 
   /* ---------- Sections ---------- */
   section{padding:96px 0}
   .band{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+  /* ---------- Bulles de fonctionnalités ---------- */
+  .bulles{display:grid;grid-template-columns:repeat(12,1fr);gap:20px;margin-top:46px}
+  .bulle{grid-column:span 6;background:var(--surface);border:1px solid var(--line);
+         border-radius:18px;padding:26px 26px 0;overflow:hidden;display:flex;flex-direction:column;
+         transition:transform .22s,box-shadow .22s,border-color .22s}
+  .bulle:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:#DCD5C3}
+  .bulle.large{grid-column:span 12}
+  .bulle.tiers{grid-column:span 4}
+  @media(max-width:900px){.bulle,.bulle.large,.bulle.tiers{grid-column:span 12}}
+  .bulle .tete{display:flex;gap:13px;align-items:flex-start;margin-bottom:16px}
+  .bulle .pic{width:40px;height:40px;border-radius:11px;background:var(--gold-soft);
+              display:grid;place-items:center;font-size:1.12rem;flex:none}
+  .bulle h3{font-size:1.06rem;margin-bottom:3px}
+  .bulle p{color:var(--ink2);font-size:.9rem;line-height:1.55}
+  /* Le visuel déborde volontairement en bas : effet « fenêtre sur le logiciel ». */
+  .shot{margin:auto -6px -1px;border-radius:12px 12px 0 0;overflow:hidden;
+        border:1px solid var(--line);border-bottom:0;background:#FBFAF7;
+        box-shadow:0 -1px 0 rgba(0,0,0,.02),0 18px 40px -22px rgba(23,26,36,.5)}
+  .shot img{width:100%;height:auto;display:block}
+  .shot.crop{max-height:270px;overflow:hidden}
+  /* Sur mobile, un visuel très large deviendrait illisible en le réduisant :
+     on lui garde une hauteur lisible et on le fait défiler horizontalement. */
+  @media(max-width:700px){
+    .shot.wide{overflow-x:auto;-webkit-overflow-scrolling:touch}
+    .shot.wide img{width:auto;max-width:none;height:200px}
+  }
 
   /* ---------- Lecteur tutoriel ---------- */
   .player{display:grid;grid-template-columns:1fr 322px;gap:28px;margin-top:44px;align-items:start}
@@ -224,7 +251,6 @@
   @media (prefers-reduced-motion:reduce){
     .reveal{opacity:1;transform:none;transition:none}
     html{scroll-behavior:auto}
-    .hero-shot .frame{transform:none}
   }
 </style>
 </head>
@@ -237,6 +263,7 @@
       DentaFlow
     </a>
     <nav class="nav-links">
+      <a href="#apercu">Aperçu</a>
       <a href="#tutoriel">Démonstration</a>
       <a href="#modules">Modules</a>
       <a href="#cabinet">Multi-postes</a>
@@ -256,7 +283,7 @@
       fonctionne <strong>sans internet</strong> et se paie <strong>une seule fois</strong>.</p>
     <div class="cta">
       <a class="btn btn-gold" href="#telecharger">Essayer 3 jours gratuitement</a>
-      <a class="btn btn-ghost" href="#tutoriel">▶ Voir la démonstration</a>
+      <a class="btn btn-ghost" href="#apercu">Voir le logiciel en images</a>
     </div>
     <div class="trust">
       <span><svg viewBox="0 0 20 20" fill="currentColor"><path d="M8 13.2 4.8 10l-1.1 1.1L8 15.4l8.4-8.4-1.1-1.1z"/></svg> 100 % hors-ligne</span>
@@ -273,6 +300,93 @@
     </div>
   </div>
 </div>
+
+<!-- ===================== BULLES DE FONCTIONNALITÉS ===================== -->
+<section id="apercu">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="eyebrow">En détail</span>
+      <h2>Ce que vous avez sous les yeux, chaque jour</h2>
+      <div class="rule" style="margin-left:auto;margin-right:auto"></div>
+      <p class="lead">Des captures réelles du logiciel, zoomées sur ce qui compte vraiment
+        pour votre cabinet.</p>
+    </div>
+
+    <div class="bulles">
+      <div class="bulle large reveal">
+        <div class="tete">
+          <div class="pic">💰</div>
+          <div>
+            <h3>Votre recette du jour, en direct</h3>
+            <p>Dès l'ouverture du logiciel : ce que vous avez encaissé aujourd'hui, le nombre de
+              rendez-vous, votre taux d'absentéisme et les devis qui dorment encore.</p>
+          </div>
+        </div>
+        <div class="shot wide"><img src="captures/z1-recette-du-jour.png" alt="Indicateurs du jour : recette encaissée, rendez-vous, no-show, devis en attente" loading="lazy"></div>
+      </div>
+
+      <div class="bulle reveal">
+        <div class="tete">
+          <div class="pic">📅</div>
+          <div>
+            <h3>Toute la journée en un écran</h3>
+            <p>Heure, patient, motif, praticien et statut : vous savez à chaque instant
+              qui est passé, qui est confirmé et qui reste à venir.</p>
+          </div>
+        </div>
+        <div class="shot crop"><img src="captures/z2-agenda-du-jour.png" alt="Liste des rendez-vous du jour avec statuts colorés" loading="lazy"></div>
+      </div>
+
+      <div class="bulle reveal">
+        <div class="tete">
+          <div class="pic">🔔</div>
+          <div>
+            <h3>Ce qui vous coûte de l'argent</h3>
+            <p>Prothèses en retard au laboratoire, consommables sous le seuil et impayés :
+              tout ce qui demande une action est réuni au même endroit.</p>
+          </div>
+        </div>
+        <div class="shot crop"><img src="captures/z3-alertes.png" alt="Panneau d'alertes : laboratoire en retard, stock bas, impayés" loading="lazy"></div>
+      </div>
+
+      <div class="bulle large reveal">
+        <div class="tete">
+          <div class="pic">🦷</div>
+          <div>
+            <h3>Odontogramme interactif</h3>
+            <p>Cliquez une dent pour faire évoluer son état — saine, carie, plombage, couronne,
+              absente, implant. Le schéma dentaire complet du patient, toujours à jour.</p>
+          </div>
+        </div>
+        <div class="shot wide"><img src="captures/z4-odontogramme.png" alt="Odontogramme : schéma dentaire avec état de chaque dent" loading="lazy"></div>
+      </div>
+
+      <div class="bulle large reveal">
+        <div class="tete">
+          <div class="pic">📊</div>
+          <div>
+            <h3>Votre chiffre d'affaires, mois par mois</h3>
+            <p>Six mois d'activité en un coup d'œil. Vous voyez immédiatement vos bons mois,
+              vos creux, et l'effet de vos décisions.</p>
+          </div>
+        </div>
+        <div class="shot wide"><img src="captures/z5-chiffre-affaires.png" alt="Graphique du chiffre d'affaires sur six mois" loading="lazy"></div>
+      </div>
+
+      <div class="bulle large reveal">
+        <div class="tete">
+          <div class="pic">💸</div>
+          <div>
+            <h3>Les impayés, et comment les récupérer</h3>
+            <p>Chaque devis accepté non soldé, avec le reste à payer — et un bouton pour
+              relancer le patient sur WhatsApp en un clic.</p>
+          </div>
+        </div>
+        <div class="shot wide"><img src="captures/z6-impayes.png" alt="Tableau des impayés avec bouton de relance WhatsApp" loading="lazy"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ===================== TUTORIEL ===================== -->
 <section id="tutoriel" class="band">
