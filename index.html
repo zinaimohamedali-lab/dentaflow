@@ -4,567 +4,783 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DentaFlow — Logiciel de gestion de cabinet dentaire | Algérie</title>
-<meta name="description" content="Agenda, dossiers patients, odontogramme anatomique, devis, ordonnances, stock, laboratoire, caisse et statistiques. 100 % hors-ligne, un seul paiement de 12 000 DA pour tout le cabinet.">
-<meta name="theme-color" content="#141824">
+<meta name="description" content="Essayez l'odontogramme directement sur cette page. Agenda, patients, devis, ordonnances, laboratoire, stock, caisse. 100 % hors-ligne, 12 000 DA une seule fois, 3 postes inclus.">
+<meta name="theme-color" content="#12141F">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><text y='52' font-size='52'>🦷</text></svg>">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="DentaFlow — le logiciel de cabinet dentaire pensé pour l'Algérie">
-<meta property="og:description" content="Tout le cabinet dans un seul logiciel. 100 % hors-ligne, 12 000 DA une fois, 3 postes inclus.">
-<meta property="og:image" content="captures/01-tableau-de-bord.png">
+<meta property="og:title" content="Cliquez une dent. C'est exactement ce que fait DentaFlow.">
+<meta property="og:description" content="Le logiciel de cabinet dentaire pensé pour l'Algérie. Hors-ligne, 12 000 DA une fois, 3 postes inclus.">
+<meta property="og:image" content="captures/z4-odontogramme.png">
 
 <style>
 :root{
-  --or:#C6A15B; --or-fonce:#B4903F; --or-pale:#F3EADA;
-  --encre:#141824; --encre-2:#1F2A44; --gris:#6B7183; --gris-2:#96A0B4;
-  --ivoire:#FAF8F4; --ligne:#E8E3D8; --blanc:#fff;
-  --rayon:18px;
-  --ombre:0 1px 2px rgba(20,24,36,.04), 0 12px 32px rgba(20,24,36,.07);
-  --ombre-forte:0 24px 70px rgba(20,24,36,.16);
-  --contenu:1180px;
+  --or:#C6A15B; --or-fonce:#A8842F; --or-pale:#F4EBDA;
+  --encre:#12141F; --encre-2:#2A3145; --gris:#6E7488; --gris-2:#A1A8B8;
+  --papier:#FBF9F5; --ligne:#E7E1D4;
+  --saine:#ECF0F1; --carie:#EB5757; --plombage:#44557E;
+  --couronne:#F2C94C; --absente:#C9CDD4; --implant:#1FA971;
+  /* Une seule famille, sans-serif, comme un logiciel professionnel.
+     La hiérarchie se fait par la graisse et la taille, jamais par l'italique. */
+  --sans:"Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",Arial,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0; background:var(--ivoire); color:var(--encre);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  font-size:17px; line-height:1.65; -webkit-font-smoothing:antialiased;
+  margin:0; background:var(--papier); color:var(--encre);
+  font-family:var(--sans); font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased;
 }
-/* Aucune image ne doit jamais être étirée : hauteur toujours déduite. */
 img{max-width:100%; height:auto; display:block}
 a{color:inherit; text-decoration:none}
-h1,h2,h3,p,ul{margin:0}
-.enveloppe{max-width:var(--contenu); margin:0 auto; padding:0 24px}
-
-/* ---------------- En-tête ---------------- */
-header{
-  position:sticky; top:0; z-index:50;
-  background:rgba(250,248,244,.82); backdrop-filter:blur(14px);
-  border-bottom:1px solid transparent; transition:border-color .25s, box-shadow .25s;
-}
-header.colle{border-bottom-color:var(--ligne); box-shadow:0 6px 24px rgba(20,24,36,.05)}
-.barre{display:flex; align-items:center; gap:28px; height:72px}
-.marque{display:flex; align-items:center; gap:10px; font-weight:800; font-size:20px; letter-spacing:-.02em}
-.marque svg{width:30px; height:30px; flex:none}
-nav{margin-left:auto; display:flex; align-items:center; gap:26px}
-nav a{font-size:15px; color:var(--gris); font-weight:500; transition:color .2s}
-nav a:hover{color:var(--encre)}
-@media(max-width:900px){nav .masquable{display:none}}
+h1,h2,h3,p,figure,blockquote{margin:0}
+.zone{max-width:1120px; margin:0 auto; padding:0 26px}
 
 /* ---------------- Boutons ---------------- */
 .btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:9px;
-  padding:14px 26px; border-radius:12px; font-weight:650; font-size:16px;
-  border:1px solid transparent; cursor:pointer; white-space:nowrap;
-  transition:transform .18s, box-shadow .18s;
+  display:inline-flex; align-items:center; gap:9px; padding:15px 28px;
+  border-radius:2px; font-weight:600; font-size:16px; letter-spacing:.01em;
+  border:1px solid transparent; cursor:pointer; font-family:var(--sans);
+  transition:transform .16s, box-shadow .16s, background .16s, color .16s;
 }
 .btn:hover{transform:translateY(-2px)}
-.btn-or{background:linear-gradient(180deg,var(--or),var(--or-fonce)); color:#fff; box-shadow:0 10px 26px rgba(180,144,63,.32)}
-.btn-or:hover{box-shadow:0 16px 34px rgba(180,144,63,.4)}
-.btn-clair{background:var(--blanc); color:var(--encre); border-color:var(--ligne); box-shadow:var(--ombre)}
-.btn-petit{padding:10px 18px; font-size:14.5px}
+.btn-or{background:var(--encre); color:#fff; box-shadow:0 8px 22px rgba(18,20,31,.22)}
+.btn-or:hover{background:var(--or-fonce)}
+.btn-ligne{border-color:var(--encre); color:var(--encre)}
+.btn-ligne:hover{background:var(--encre); color:#fff}
+.btn-clair{border-color:rgba(255,255,255,.35); color:#fff}
+.btn-clair:hover{background:#fff; color:var(--encre)}
 
-/* ---------------- Hero ---------------- */
-.hero{position:relative; overflow:hidden; padding:76px 0 0}
-.hero::before{
-  content:''; position:absolute; inset:-30% 55% 40% -20%;
-  background:radial-gradient(closest-side, rgba(198,161,91,.16), transparent 70%); pointer-events:none;
-}
-.hero::after{
-  content:''; position:absolute; right:-10%; top:-25%; width:60%; height:80%;
-  background:radial-gradient(closest-side, rgba(31,42,68,.10), transparent 70%); pointer-events:none;
-}
-.hero .enveloppe{position:relative}
-.pastille{
-  display:inline-flex; align-items:center; gap:9px; padding:7px 15px;
-  background:var(--blanc); border:1px solid var(--ligne); border-radius:999px;
-  font-size:13.5px; color:var(--gris); box-shadow:var(--ombre); margin-bottom:26px;
-}
-.pastille b{color:var(--or-fonce); font-weight:700}
-.pastille .point{width:8px;height:8px;border-radius:50%;background:#1FA971;box-shadow:0 0 0 4px rgba(31,169,113,.15)}
-h1{
-  font-size:clamp(38px,5.6vw,66px); line-height:1.05; letter-spacing:-.035em;
-  font-weight:800; margin-bottom:20px; max-width:16ch;
-}
-h1 .accent{
-  background:linear-gradient(180deg,var(--or),var(--or-fonce));
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
-.chapeau{font-size:clamp(17px,2vw,20px); color:var(--gris); max-width:56ch; margin-bottom:32px}
-.actions{display:flex; flex-wrap:wrap; gap:14px; align-items:center}
-.sous-actions{margin-top:16px; font-size:14px; color:var(--gris-2)}
-.sous-actions b{color:var(--gris)}
-
-.cadre-appli{
-  margin-top:56px; border-radius:var(--rayon) var(--rayon) 0 0; overflow:hidden;
-  border:1px solid var(--ligne); border-bottom:0; background:var(--blanc);
-  box-shadow:var(--ombre-forte);
-}
-.cadre-barre{
-  display:flex; align-items:center; gap:7px; padding:11px 16px;
-  background:linear-gradient(180deg,#fff,#F6F3ED); border-bottom:1px solid var(--ligne);
-}
-.cadre-barre i{width:11px;height:11px;border-radius:50%;background:#DDD6C8; display:block}
-.cadre-barre span{margin-left:12px; font-size:12.5px; color:var(--gris-2)}
-.cadre-appli img{aspect-ratio:1780/1076}
-
-/* ---------------- Bandeau chiffres ---------------- */
-.bandeau{border-top:1px solid var(--ligne); border-bottom:1px solid var(--ligne); background:var(--blanc)}
-.bandeau .enveloppe{display:grid; grid-template-columns:repeat(4,1fr); padding-left:0; padding-right:0}
-.bandeau div{padding:26px 18px; text-align:center; border-left:1px solid var(--ligne)}
-.bandeau div:first-child{border-left:0}
-.bandeau b{display:block; font-size:26px; letter-spacing:-.02em}
-.bandeau small{color:var(--gris); font-size:13.5px}
-@media(max-width:760px){
-  .bandeau .enveloppe{grid-template-columns:repeat(2,1fr)}
-  .bandeau div:nth-child(3){border-left:0}
-  .bandeau div:nth-child(n+3){border-top:1px solid var(--ligne)}
-}
-
-/* ---------------- Sections ---------------- */
-section{padding:96px 0}
-.titre-section{text-align:center; max-width:640px; margin:0 auto 56px}
-.oeil{
-  display:inline-block; font-size:12.5px; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--or-fonce); font-weight:700; margin-bottom:14px;
-}
-h2{font-size:clamp(28px,3.6vw,44px); line-height:1.15; letter-spacing:-.03em; font-weight:800; margin-bottom:16px}
-.titre-section p{color:var(--gris); font-size:18px}
-
-/* ---------------- Points forts ---------------- */
-.forts{display:grid; grid-template-columns:repeat(3,1fr); gap:22px}
-@media(max-width:980px){.forts{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:620px){.forts{grid-template-columns:1fr}}
-.fort{
-  background:var(--blanc); border:1px solid var(--ligne); border-radius:var(--rayon);
-  padding:30px 28px; box-shadow:var(--ombre); position:relative; overflow:hidden;
-  transition:transform .22s, box-shadow .22s;
-}
-.fort:hover{transform:translateY(-4px); box-shadow:0 18px 44px rgba(20,24,36,.10)}
-.fort::after{
-  content:''; position:absolute; left:28px; top:0; width:34px; height:3px;
-  background:linear-gradient(90deg,var(--or),transparent); border-radius:0 0 3px 3px;
-}
-.fort .ico{
-  width:48px; height:48px; border-radius:14px; display:grid; place-items:center;
-  font-size:23px; background:var(--or-pale); margin-bottom:18px;
-}
-.fort h3{margin-bottom:8px; font-size:19px; letter-spacing:-.015em}
-.fort p{color:var(--gris); font-size:15.5px; line-height:1.6}
-
-/* ---------------- Mises en avant ---------------- */
-.avant{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; margin-bottom:110px}
-.avant:last-child{margin-bottom:0}
-.avant.inverse .texte{order:2}
-@media(max-width:900px){
-  .avant{grid-template-columns:1fr; gap:34px}
-  .avant.inverse .texte{order:0}
-}
-.avant h3{font-size:clamp(24px,3vw,34px); letter-spacing:-.025em; line-height:1.2; margin:12px 0 16px}
-.avant .texte > p{color:var(--gris); margin-bottom:20px; font-size:17px}
-.liste{list-style:none; padding:0}
-.liste li{position:relative; padding:8px 0 8px 30px; font-size:16px; color:var(--encre-2)}
-.liste li::before{
-  content:''; position:absolute; left:2px; top:16px; width:9px; height:9px;
-  border-radius:50%; border:2px solid var(--or); background:transparent;
-}
-.visuel{
-  border-radius:var(--rayon); overflow:hidden; border:1px solid var(--ligne);
-  background:var(--blanc); box-shadow:var(--ombre-forte); padding:12px;
-}
-.visuel img{border-radius:10px}
-
-/* ---------------- Galerie ---------------- */
-.galerie{background:var(--encre); color:#fff}
-.galerie h2{color:#fff}
-.galerie .titre-section p{color:#9AA3B8}
-.galerie .oeil{color:var(--or)}
-.onglets{display:flex; flex-wrap:wrap; gap:9px; justify-content:center; margin-bottom:34px}
-.onglet{
-  padding:10px 18px; border-radius:999px; font-size:14.5px; font-weight:600; cursor:pointer;
-  background:rgba(255,255,255,.07); color:#C9D0E0; border:1px solid rgba(255,255,255,.10);
-  font-family:inherit; transition:background .2s, color .2s, border-color .2s;
-}
-.onglet:hover{background:rgba(255,255,255,.13); color:#fff}
-.onglet.actif{background:linear-gradient(180deg,var(--or),var(--or-fonce)); color:#fff; border-color:transparent}
+/* ================= 1. L'ODONTOGRAMME, EN PREMIER ================= */
 .scene{
-  border-radius:var(--rayon); overflow:hidden; border:1px solid rgba(255,255,255,.12);
-  box-shadow:0 34px 90px rgba(0,0,0,.45); background:#0E1220;
+  min-height:100svh; display:flex; flex-direction:column; justify-content:center;
+  padding:32px 0 48px; position:relative; overflow:hidden;
 }
-.scene img{aspect-ratio:1780/1076}
-.legende{text-align:center; color:#9AA3B8; font-size:15px; margin-top:20px; min-height:24px}
-
-/* ---------------- Tout inclus ---------------- */
-.inclus{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
-@media(max-width:980px){.inclus{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.inclus{grid-template-columns:1fr}}
-.inclus div{
-  background:var(--blanc); border:1px solid var(--ligne); border-radius:13px;
-  padding:16px 18px; font-size:15.5px; display:flex; gap:11px; align-items:flex-start;
+.scene::before{
+  content:''; position:absolute; inset:-40% 50% 50% -30%;
+  background:radial-gradient(closest-side, rgba(198,161,91,.16), transparent 72%); pointer-events:none;
 }
-.inclus .coche{color:#1FA971; font-weight:800; flex:none}
-
-/* ---------------- Tarif ---------------- */
-.tarif{background:var(--blanc); border-top:1px solid var(--ligne); border-bottom:1px solid var(--ligne)}
-.grille-tarif{display:grid; grid-template-columns:1fr 1.25fr; gap:26px}
-@media(max-width:900px){.grille-tarif{grid-template-columns:1fr}}
-.carte-tarif{border:1px solid var(--ligne); border-radius:var(--rayon); padding:34px; background:var(--ivoire)}
-.carte-tarif.vedette{
-  background:linear-gradient(160deg,var(--encre),var(--encre-2)); color:#fff; border-color:transparent;
-  box-shadow:var(--ombre-forte); position:relative; overflow:hidden;
+.enseigne{
+  position:absolute; top:26px; left:0; right:0;
+  display:flex; align-items:center; gap:11px; font-weight:700; letter-spacing:.16em; font-size:14px;
 }
-.carte-tarif.vedette::after{
-  content:''; position:absolute; right:-70px; bottom:-90px; width:280px; height:280px;
-  border-radius:50%; background:radial-gradient(closest-side, rgba(198,161,91,.30), transparent 70%);
+.enseigne .zone{display:flex; align-items:center; gap:11px; width:100%}
+.enseigne svg{width:26px; height:26px; flex:none}
+.enseigne .droite{margin-left:auto; font-weight:500; letter-spacing:0; font-size:14.5px; color:var(--gris)}
+@media(max-width:700px){.enseigne .droite{display:none}}
+
+.invite{font-size:clamp(32px,5.6vw,64px); line-height:1.06; letter-spacing:-.035em; font-weight:800}
+.invite em{font-style:normal; color:var(--or-fonce)}
+.sous-invite{margin-top:16px; font-size:clamp(16px,1.8vw,19px); color:var(--gris); max-width:44ch}
+
+/* --- La bouche --- */
+.bouche{margin:38px 0 10px; user-select:none}
+.arcade{display:flex; justify-content:center; align-items:flex-end; gap:clamp(1px,.45vw,6px); flex-wrap:nowrap}
+.arcade.bas{align-items:flex-start; margin-top:26px}
+.dent{
+  background:none; border:0; padding:0; cursor:pointer; line-height:0;
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+  transition:transform .14s;
 }
-.carte-tarif > *{position:relative; z-index:1}
-.etiquette{display:inline-block; font-size:12px; letter-spacing:.14em; text-transform:uppercase; font-weight:700; color:var(--or); margin-bottom:12px}
-.prix{font-size:52px; font-weight:800; letter-spacing:-.04em; line-height:1; margin:6px 0 4px}
-.prix small{font-size:20px; font-weight:600; letter-spacing:0}
-.carte-tarif > p{color:var(--gris); margin-bottom:18px}
-.carte-tarif.vedette > p{color:#B9C1D4}
-.carte-tarif.vedette .liste li{color:#E7EAF2}
-.note{font-size:14px; color:var(--gris-2); text-align:center; margin-top:26px}
-
-/* ---------------- Appel final ---------------- */
-.final .enveloppe{
-  background:linear-gradient(160deg,var(--encre),var(--encre-2)); color:#fff;
-  border-radius:26px; padding:70px 32px; text-align:center;
-  box-shadow:var(--ombre-forte); position:relative; overflow:hidden;
+.arcade.bas .dent{flex-direction:column-reverse}
+.dent:hover{transform:translateY(-4px)}
+.arcade.bas .dent:hover{transform:translateY(4px)}
+.dent svg{overflow:visible}
+.dent path{
+  fill:var(--saine); stroke:#7D869B; stroke-width:2.4; stroke-linejoin:round;
+  transition:fill .18s;
 }
-.final h2{color:#fff; margin-bottom:14px}
-.final p{color:#B9C1D4; max-width:50ch; margin:0 auto 30px; font-size:18px}
-.final .actions{justify-content:center}
+.dent[data-etat="carie"] path{fill:var(--carie)}
+.dent[data-etat="plombage"] path{fill:var(--plombage)}
+.dent[data-etat="couronne"] path{fill:var(--couronne)}
+.dent[data-etat="implant"] path{fill:var(--implant)}
+.dent[data-etat="absente"] path{fill:none; stroke:var(--absente); stroke-dasharray:7 6; opacity:.75}
+.num{font-size:11px; color:var(--gris-2); font-variant-numeric:tabular-nums; letter-spacing:.02em}
+.dent[data-etat="absente"] .num{opacity:.5}
+@media(max-width:900px){ .num{font-size:9px} }
+@media(max-width:620px){ .num{display:none} }
 
-/* ---------------- Pied ---------------- */
-footer{padding:52px 0 40px; border-top:1px solid var(--ligne); background:var(--blanc)}
-.pied{display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:space-between; color:var(--gris); font-size:14.5px}
-.pied a{color:var(--or-fonce); font-weight:600}
+.legende-etats{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:9px 18px;
+  margin-top:30px; font-size:13.5px; color:var(--gris);
+}
+.legende-etats span{display:inline-flex; align-items:center; gap:7px}
+.puce{width:13px; height:13px; border-radius:3px; border:1px solid rgba(0,0,0,.14)}
+.compteur{
+  text-align:center; margin-top:22px; font-size:14.5px; color:var(--gris);
+  min-height:22px; transition:opacity .3s;
+}
+.compteur b{color:var(--encre)}
+.actions-scene{display:flex; flex-wrap:wrap; gap:14px; justify-content:center; margin-top:26px}
 
-/* ---------------- Apparition ---------------- */
-.anim{opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease}
+/* ================= Chapitres ================= */
+.chapitre{padding:110px 0; border-top:1px solid var(--ligne)}
+.numero{
+  font-size:13px; font-weight:700; color:var(--or-fonce);
+  letter-spacing:.20em; margin-bottom:18px;
+}
+.chapitre h2{
+  font-size:clamp(28px,3.9vw,46px); line-height:1.13;
+  letter-spacing:-.03em; font-weight:800; max-width:20ch;
+}
+.chapitre h2 em{font-style:normal; color:var(--or-fonce)}
+.intro{margin-top:20px; font-size:18px; color:var(--gris); max-width:56ch}
+
+/* --- Questions / réponses, en typographie --- */
+.qr{margin-top:56px; display:grid; gap:0}
+.qr div{
+  display:grid; grid-template-columns:1fr 1.25fr; gap:40px;
+  padding:28px 0; border-top:1px solid var(--ligne); align-items:baseline;
+}
+.qr div:last-child{border-bottom:1px solid var(--ligne)}
+.qr q{
+  font-size:clamp(18px,2vw,23px); font-weight:600; letter-spacing:-.015em;
+  line-height:1.32; quotes:"«\00a0" "\00a0»";
+}
+.qr p{font-size:16.5px; color:var(--gris)}
+.qr strong{color:var(--encre); font-weight:600}
+@media(max-width:820px){
+  .qr div{grid-template-columns:1fr; gap:12px}
+}
+
+/* --- Scène kiosque : image qui déborde --- */
+.debord{
+  display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-top:56px;
+}
+.debord .visuel{
+  border-radius:3px; overflow:hidden; border:1px solid var(--ligne);
+  box-shadow:0 30px 70px rgba(18,20,31,.16); background:#fff;
+}
+@media(max-width:900px){.debord{grid-template-columns:1fr; gap:30px}}
+.liste{list-style:none; padding:0; margin:26px 0 0}
+.liste li{position:relative; padding:9px 0 9px 26px; font-size:16.5px}
+.liste li::before{
+  content:''; position:absolute; left:0; top:19px; width:11px; height:1px; background:var(--or);
+}
+
+/* ================= Schéma des postes ================= */
+.reseau{
+  margin-top:52px; display:grid; grid-template-columns:1fr 1fr 1fr; gap:0;
+  border:1px solid var(--ligne); background:#fff;
+}
+@media(max-width:820px){.reseau{grid-template-columns:1fr}}
+.poste{padding:32px 26px; border-left:1px solid var(--ligne); position:relative}
+.poste:first-child{border-left:0}
+@media(max-width:820px){
+  .poste{border-left:0; border-top:1px solid var(--ligne)}
+  .poste:first-child{border-top:0}
+}
+.poste.pilote{background:var(--encre); color:#fff}
+.poste .role{
+  font-size:12px; font-weight:700; letter-spacing:.18em; color:var(--or-fonce); margin-bottom:14px;
+}
+.poste.pilote .role{color:var(--or)}
+.poste h3{font-size:20px; font-weight:700; letter-spacing:-.02em; margin-bottom:10px}
+.poste p{font-size:15.5px; color:var(--gris); line-height:1.55}
+.poste.pilote p{color:#AEB6C8}
+.poste ul{list-style:none; padding:0; margin:16px 0 0}
+.poste li{font-size:14.5px; padding:6px 0 6px 18px; position:relative; color:var(--gris)}
+.poste.pilote li{color:#C6CCDA}
+.poste li::before{content:''; position:absolute; left:0; top:14px; width:9px; height:1px; background:var(--or)}
+.machine{
+  display:flex; align-items:flex-end; gap:4px; height:34px; margin-bottom:18px;
+}
+.machine .ecran{
+  width:44px; height:29px; border:2px solid currentColor; border-radius:2px; opacity:.55;
+}
+.machine .socle{width:16px; height:3px; background:currentColor; opacity:.55; margin-bottom:2px}
+/* Liaison : montre que les trois postes forment un seul réseau. */
+.lien-reseau{
+  display:flex; align-items:center; gap:16px;
+  border:1px solid var(--ligne); border-top:0; background:#fff;
+  padding:16px 26px; font-size:14.5px; color:var(--gris);
+}
+.lien-reseau .trait{flex:1; height:1px; background:var(--or); opacity:.55}
+.lien-reseau b{color:var(--encre); font-weight:600; white-space:nowrap}
+@media(max-width:620px){
+  .lien-reseau{flex-direction:column; gap:10px; text-align:center}
+  .lien-reseau .trait{width:60%; flex:none}
+}
+.note-reseau{
+  margin-top:22px; padding:18px 22px; background:var(--or-pale);
+  border-left:3px solid var(--or); font-size:15.5px;
+}
+
+/* ================= Comparaison ================= */
+.compare-tab{margin-top:48px; overflow-x:auto; -webkit-overflow-scrolling:touch}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:15.5px}
+thead th{
+  text-align:left; padding:16px 14px; font-size:13px; font-weight:700;
+  letter-spacing:.08em; text-transform:uppercase; color:var(--gris);
+  border-bottom:2px solid var(--ligne); vertical-align:bottom;
+}
+thead th.nous{color:var(--encre); background:var(--or-pale); border-bottom-color:var(--or)}
+tbody td{padding:15px 14px; border-bottom:1px solid var(--ligne)}
+tbody td.c{text-align:center; width:20%}
+tbody td.nous{background:rgba(198,161,91,.10); font-weight:600}
+tbody tr:last-child td{border-bottom:0}
+.oui{color:var(--implant); font-weight:700}
+.non{color:var(--gris-2)}
+.mention{margin-top:18px; font-size:14px; color:var(--gris-2); max-width:70ch}
+
+/* ================= Galerie sombre ================= */
+.galerie{background:var(--encre); color:#fff; padding:110px 0; border:0}
+.galerie h2{color:#fff}
+.galerie .intro{color:#9AA2B6}
+.onglets{display:flex; flex-wrap:wrap; gap:0; margin:44px 0 0; border-bottom:1px solid rgba(255,255,255,.14)}
+.onglet{
+  padding:13px 18px; font-size:14.5px; font-weight:500; cursor:pointer; font-family:var(--sans);
+  background:none; border:0; border-bottom:2px solid transparent; color:#8D96AC;
+  transition:color .2s, border-color .2s;
+}
+.onglet:hover{color:#fff}
+.onglet.actif{color:#fff; border-bottom-color:var(--or)}
+.cadre{margin-top:30px; border:1px solid rgba(255,255,255,.12); background:#080A12; overflow:hidden}
+.cadre img{aspect-ratio:2200/1330}
+.legende-ecran{margin-top:18px; color:#9AA2B6; font-size:15.5px; min-height:24px}
+
+/* ================= Prix ================= */
+.prix-scene{padding:120px 0; border-top:1px solid var(--ligne); text-align:center}
+.montant{
+  font-size:clamp(60px,12vw,150px); line-height:.94;
+  letter-spacing:-.055em; font-weight:800;
+}
+.montant small{font-size:.32em; font-weight:700; letter-spacing:-.02em}
+.une-fois{
+  font-size:clamp(18px,2.2vw,26px); font-weight:600; letter-spacing:.01em;
+  color:var(--or-fonce); margin-top:12px;
+}
+.details-prix{
+  margin:36px auto 0; max-width:640px; display:grid; grid-template-columns:repeat(3,1fr);
+  border-top:1px solid var(--ligne); border-bottom:1px solid var(--ligne);
+}
+.details-prix div{padding:22px 12px; border-left:1px solid var(--ligne)}
+.details-prix div:first-child{border-left:0}
+.details-prix b{display:block; font-size:19px}
+.details-prix span{font-size:13.5px; color:var(--gris)}
+@media(max-width:620px){
+  .details-prix{grid-template-columns:1fr}
+  .details-prix div{border-left:0; border-top:1px solid var(--ligne)}
+  .details-prix div:first-child{border-top:0}
+}
+.compare{margin-top:30px; font-size:16px; color:var(--gris)}
+
+/* ================= Inclus, en typographie ================= */
+.tout{
+  margin-top:48px; column-count:3; column-gap:44px; font-size:16.5px;
+}
+.tout p{padding:10px 0; border-bottom:1px solid var(--ligne); break-inside:avoid}
+@media(max-width:900px){.tout{column-count:2}}
+@media(max-width:560px){.tout{column-count:1}}
+
+/* ================= Fin ================= */
+.fin{background:var(--encre); color:#fff; padding:120px 0; text-align:center}
+.fin h2{font-size:clamp(28px,4vw,46px); line-height:1.14; letter-spacing:-.03em; font-weight:800; color:#fff; max-width:22ch; margin:0 auto}
+.fin p{color:#9AA2B6; margin:22px auto 34px; max-width:52ch; font-size:17.5px}
+.fin .btns{display:flex; flex-wrap:wrap; gap:14px; justify-content:center}
+footer{background:var(--encre); color:#6C748A; padding:0 0 46px; font-size:14px}
+footer .zone{display:flex; flex-wrap:wrap; gap:14px; justify-content:space-between;
+  border-top:1px solid rgba(255,255,255,.10); padding-top:26px}
+footer a{color:var(--or)}
+
+/* ================= Apparition ================= */
+.anim{opacity:0; transform:translateY(16px); transition:opacity .8s, transform .8s}
 .anim.vu{opacity:1; transform:none}
 @media(prefers-reduced-motion:reduce){
   .anim{opacity:1; transform:none; transition:none}
   html{scroll-behavior:auto}
-  .btn:hover,.fort:hover{transform:none}
+  .btn:hover,.dent:hover{transform:none}
 }
 </style>
 </head>
 <body>
 
-<header id="entete">
-  <div class="enveloppe barre">
-    <a class="marque" href="#">
-      <svg viewBox="0 0 100 100" fill="none" stroke="#B4903F" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+<!-- ======================= 1. L'ODONTOGRAMME ======================= -->
+<section class="scene">
+  <div class="enseigne">
+    <div class="zone">
+      <svg viewBox="0 0 100 100" fill="none" stroke="#A8842F" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M50 24c-9-9-24-11-32-2-9 10-5 26-1 38 3 10 6 20 12 20 5 0 6-11 8-19 1-5 5-5 6 0 2 8 3 19 8 19 6 0 9-10 12-20 4-12 8-28-1-38-8-9-23-7-32 2z"/>
       </svg>
-      DentaFlow
-    </a>
-    <nav>
-      <a class="masquable" href="#forts">Points forts</a>
-      <a class="masquable" href="#ecrans">Écrans</a>
-      <a class="masquable" href="#tarif">Tarif</a>
-      <a class="btn btn-or btn-petit" href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe">⬇ Télécharger</a>
-    </nav>
+      <span>DENTAFLOW</span>
+      <span class="droite">Logiciel de cabinet dentaire · Algérie</span>
+    </div>
   </div>
-</header>
 
-<!-- ======================= HERO ======================= -->
-<div class="hero">
-  <div class="enveloppe">
-    <span class="pastille"><span class="point"></span> Version <b>1.3.7</b> · Windows 10 / 11</span>
-    <h1>Tout votre cabinet, dans <span class="accent">un seul logiciel</span>.</h1>
-    <p class="chapeau">
-      Agenda, dossiers patients, odontogramme, devis, ordonnances, laboratoire, stock, caisse et
-      statistiques. <strong>Sans internet</strong>, sans abonnement, à un prix algérien.
+  <div class="zone">
+    <h1 class="invite">Cliquez une dent.<br><em>Vous venez d'utiliser DentaFlow.</em></h1>
+    <p class="sous-invite">
+      Ceci n'est pas une image : c'est l'odontogramme du logiciel, avec les mêmes
+      silhouettes anatomiques et la même numérotation FDI.
     </p>
-    <div class="actions">
-      <a class="btn btn-or" href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe">⬇ Télécharger — essai 3 jours</a>
-      <a class="btn btn-clair" href="https://wa.me/213676538803">💬 Parler sur WhatsApp</a>
-    </div>
-    <p class="sous-actions">Aucune carte bancaire · aucun compte à créer · <b>vos données restent sur votre PC</b></p>
+  </div>
 
-    <div class="cadre-appli anim">
-      <div class="cadre-barre">
-        <i></i><i></i><i></i>
-        <span>DentaFlow — Tableau de bord</span>
-      </div>
-      <img src="captures/01-tableau-de-bord.png" width="1780" alt="Tableau de bord de DentaFlow : recette du jour, rendez-vous, devis en attente et points à surveiller.">
+  <div class="bouche zone">
+    <div class="arcade haut" id="arcade-haut"></div>
+    <div class="arcade bas" id="arcade-bas"></div>
+
+    <div class="legende-etats">
+      <span><i class="puce" style="background:var(--saine)"></i> Saine</span>
+      <span><i class="puce" style="background:var(--carie)"></i> Carie</span>
+      <span><i class="puce" style="background:var(--plombage)"></i> Plombage</span>
+      <span><i class="puce" style="background:var(--couronne)"></i> Couronne</span>
+      <span><i class="puce" style="background:transparent;border-style:dashed"></i> Absente</span>
+      <span><i class="puce" style="background:var(--implant)"></i> Implant</span>
+    </div>
+
+    <p class="compteur" id="compteur">Chaque clic fait défiler les états, exactement comme dans le logiciel.</p>
+
+    <div class="actions-scene">
+      <a class="btn btn-or" href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe">Télécharger — essai 3 jours</a>
+      <a class="btn btn-ligne" href="#prix">Voir le prix</a>
     </div>
   </div>
-</div>
+</section>
 
-<div class="bandeau">
-  <div class="enveloppe">
-    <div><b>12 000 DA</b><small>une seule fois, à vie</small></div>
-    <div><b>3 postes</b><small>inclus dans la licence</small></div>
-    <div><b>100 %</b><small>hors-ligne</small></div>
-    <div><b>3 jours</b><small>d'essai complet</small></div>
-  </div>
-</div>
+<!-- ======================= 2. LES VRAIES QUESTIONS ======================= -->
+<section class="chapitre">
+  <div class="zone">
+    <div class="numero anim">01 — CE QUE VOUS ALLEZ DEMANDER</div>
+    <h2 class="anim">Les six questions que pose <em>tout dentiste</em> avant d'acheter.</h2>
 
-<!-- ======================= POINTS FORTS ======================= -->
-<section id="forts">
-  <div class="enveloppe">
-    <div class="titre-section anim">
-      <span class="oeil">Pourquoi DentaFlow</span>
-      <h2>Six raisons de changer dès aujourd'hui</h2>
-      <p>Ce que les autres logiciels font payer en option — ou ne font pas du tout.</p>
-    </div>
-
-    <div class="forts">
-      <div class="fort anim">
-        <div class="ico">📴</div>
-        <h3>Fonctionne sans internet</h3>
-        <p>Coupure de connexion, panne d'ADSL, cabinet mal couvert : le logiciel continue. Vos données sont sur votre PC, pas sur le serveur d'un autre.</p>
+    <div class="qr">
+      <div class="anim">
+        <q>Et si internet est coupé&nbsp;?</q>
+        <p>Il ne se passe rien. DentaFlow ne s'en sert pas. Vos données sont sur votre PC, pas sur le serveur d'une société étrangère.</p>
       </div>
-      <div class="fort anim">
-        <div class="ico">💳</div>
-        <h3>Un seul paiement</h3>
-        <p>12 000 DA une fois, pour toujours. Pas d'abonnement mensuel qui finit par coûter plus cher que le logiciel lui-même.</p>
+      <div class="anim">
+        <q>Combien par mois&nbsp;?</q>
+        <p><strong>Rien.</strong> 12 000 DA une seule fois, trois postes inclus, à vie. Les mises à jour sont comprises. Il n'y a aucun autre versement, jamais.</p>
       </div>
-      <div class="fort anim">
-        <div class="ico">🦷</div>
-        <h3>Odontogramme anatomique</h3>
-        <p>De vraies silhouettes dentaires à la numérotation FDI, vue de face <em>et</em> vue du dessus, liées entre elles. Pas des cases numérotées.</p>
+      <div class="anim">
+        <q>Et si mon PC lâche&nbsp;?</q>
+        <p>Le logiciel sauvegarde tout seul, chaque jour. Si le fichier est abîmé, il repart de lui-même sur la dernière sauvegarde et vous dit à quelle heure elle remonte.</p>
       </div>
-      <div class="fort anim">
-        <div class="ico">📱</div>
-        <h3>Kiosque patient par QR code</h3>
-        <p>Le patient scanne à l'accueil et remplit sa demande sur son téléphone. Elle arrive directement dans le logiciel : votre assistante ne tape plus rien.</p>
+      <div class="anim">
+        <q>J'ai trois fauteuils.</q>
+        <p>Trois postes sont compris. Un seul code à saisir sur le PC principal&nbsp;; les autres le trouvent seuls sur le réseau du cabinet. Poste supplémentaire&nbsp;: <strong>3 000 DA</strong>, à vie.</p>
       </div>
-      <div class="fort anim">
-        <div class="ico">🖧</div>
-        <h3>Une licence, tout le cabinet</h3>
-        <p>Un seul code, sur le PC principal. Les autres postes le trouvent tout seuls sur le réseau du cabinet et s'activent sans code.</p>
+      <div class="anim">
+        <q>Ça imprime la feuille CNAS&nbsp;?</q>
+        <p>Oui, avec le numéro d'immatriculation, les actes, les honoraires et les emplacements de signature. Comme les devis et ordonnances&nbsp;: en A5, à votre logo.</p>
       </div>
-      <div class="fort anim">
-        <div class="ico">🖨️</div>
-        <h3>Vos documents, votre logo</h3>
-        <p>Devis, ordonnances, certificats et feuilles de soins CNAS imprimés en A5, avec votre logo en en-tête et en filigrane.</p>
+      <div class="anim">
+        <q>Je ne suis pas informaticien.</q>
+        <p>L'installation dure deux minutes et ne demande aucun droit administrateur. Vous essayez trois jours sur des données de démonstration, sans saisir un seul patient.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======================= MISES EN AVANT ======================= -->
-<section style="padding-top:0">
-  <div class="enveloppe">
+<!-- ======================= 3. LE KIOSQUE ======================= -->
+<section class="chapitre">
+  <div class="zone">
+    <div class="numero anim">02 — À L'ACCUEIL</div>
+    <h2 class="anim">Le patient remplit sa fiche. <em>Votre assistante, non.</em></h2>
 
-    <div class="avant anim">
-      <div class="texte">
-        <span class="oeil">Dossier patient</span>
-        <h3>L'odontogramme que vos confrères vous envieront</h3>
-        <p>Chaque dent est dessinée à sa vraie forme et porte son numéro FDI. Un clic fait défiler les états : saine, carie, plombage, couronne, absente, implant.</p>
-        <ul class="liste">
-          <li>Vue de face et vue du dessus <strong>synchronisées</strong></li>
-          <li>Antécédents, allergies et alertes médicales en tête de fiche</li>
-          <li>Sondage parodontal 6 sites par dent, avec historique</li>
-          <li>Fiche complète exportable en PDF</li>
-        </ul>
-      </div>
-      <div class="visuel">
-        <img src="captures/z4-odontogramme.png" width="1414" alt="Odontogramme anatomique : arcades supérieure et inférieure en vue de face, et vue occlusale des deux arcades." style="aspect-ratio:1414/1175">
-      </div>
-    </div>
-
-    <div class="avant inverse anim">
-      <div class="texte">
-        <span class="oeil">Kiosque patient</span>
-        <h3>Le patient remplit sa demande, pas votre assistante</h3>
-        <p>Affichez le QR code à l'accueil. Le patient le scanne, saisit son nom, son numéro et son motif. La demande apparaît aussitôt dans DentaFlow, prête à devenir un rendez-vous.</p>
+    <div class="debord">
+      <div class="anim">
+        <p class="intro" style="margin-top:0">
+          Un QR code posé sur le comptoir. Le patient le scanne, saisit son nom, son numéro
+          et son motif sur son propre téléphone. La demande apparaît aussitôt dans le logiciel,
+          prête à devenir un rendez-vous.
+        </p>
         <ul class="liste">
           <li>Aucune application à installer pour le patient</li>
-          <li>Fonctionne sur le Wi-Fi du cabinet, <strong>sans internet</strong></li>
+          <li>Fonctionne sur le Wi-Fi du cabinet, sans internet</li>
           <li>Un clic pour créer le patient et poser sa date</li>
         </ul>
       </div>
-      <div class="visuel">
-        <img src="captures/10-demandes.png" width="1780" alt="Écran des demandes de rendez-vous avec le QR code du kiosque patient." style="aspect-ratio:1780/1076">
-      </div>
+      <figure class="visuel anim">
+        <img src="captures/10-demandes.png" width="2200" height="1330" loading="lazy" decoding="async"
+             alt="Écran des demandes de rendez-vous avec le QR code du kiosque patient" style="aspect-ratio:2200/1330">
+      </figure>
     </div>
-
-    <div class="avant anim">
-      <div class="texte">
-        <span class="oeil">Pilotage</span>
-        <h3>Vous savez enfin ce que rapporte votre cabinet</h3>
-        <p>Recette du jour sur le tableau de bord, chiffre d'affaires sur six mois, actes les plus rentables, impayés patient par patient — et la relance WhatsApp en un clic.</p>
-        <ul class="liste">
-          <li>Chiffre d'affaires suivi <strong>par praticien</strong></li>
-          <li>Devis en attente et montants correspondants</li>
-          <li>Journal de caisse exportable vers Excel</li>
-          <li>Taux de rendez-vous non honorés</li>
-        </ul>
-      </div>
-      <div class="visuel">
-        <img src="captures/z6-impayes.png" width="2206" alt="Tableau des impayés avec bouton de relance WhatsApp." style="aspect-ratio:2206/556">
-        <img src="captures/z5-chiffre-affaires.png" width="2206" alt="Chiffre d'affaires des six derniers mois." style="aspect-ratio:2206/432; margin-top:12px">
-      </div>
-    </div>
-
   </div>
 </section>
 
-<!-- ======================= GALERIE ======================= -->
-<section class="galerie" id="ecrans">
-  <div class="enveloppe">
-    <div class="titre-section anim">
-      <span class="oeil">Visite guidée</span>
-      <h2>Onze écrans, aucun superflu</h2>
-      <p>Parcourez le logiciel tel que vous l'utiliserez chaque jour.</p>
+<!-- ======================= 3 bis. LES POSTES DU CABINET ======================= -->
+<section class="chapitre">
+  <div class="zone">
+    <div class="numero anim">03 — LES POSTES DU CABINET</div>
+    <h2 class="anim">Un seul code. <em>Les autres postes suivent.</em></h2>
+    <p class="intro anim">
+      Vous n'achetez pas trois licences : vous en activez une, sur le PC principal.
+      Les autres postes le trouvent seuls sur le réseau du cabinet.
+    </p>
+
+    <div class="reseau anim">
+      <div class="poste pilote">
+        <div class="machine"><div class="socle"></div><div class="ecran"></div><div class="socle"></div></div>
+        <div class="role">POSTE 1 · LE PILOTE</div>
+        <h3>PC principal</h3>
+        <p>Celui du secrétariat ou du cabinet du praticien titulaire. C'est lui qui porte la licence et le dossier de données.</p>
+        <ul>
+          <li>Le code d'activation se saisit ici, une seule fois</li>
+          <li>Il héberge la base du cabinet</li>
+          <li>Il publie sa licence sur le réseau local</li>
+        </ul>
+      </div>
+
+      <div class="poste">
+        <div class="machine"><div class="socle"></div><div class="ecran"></div><div class="socle"></div></div>
+        <div class="role">POSTE 2</div>
+        <h3>Assistante</h3>
+        <p>Trouve le pilote automatiquement et s'active sans code. Le gérant lui attribue son rôle, son identifiant et son code PIN.</p>
+        <ul>
+          <li>Agenda, patients, caisse</li>
+          <li>Prix d'achat et marges masqués</li>
+        </ul>
+      </div>
+
+      <div class="poste">
+        <div class="machine"><div class="socle"></div><div class="ecran"></div><div class="socle"></div></div>
+        <div class="role">POSTE 3</div>
+        <h3>Praticien</h3>
+        <p>Même principe : aucun code à saisir. Il voit la même base, mise à jour en direct par tous les postes.</p>
+        <ul>
+          <li>Dossiers, odontogramme, soins</li>
+          <li>Devis et ordonnances</li>
+        </ul>
+      </div>
     </div>
+
+    <div class="lien-reseau anim">
+      <span class="trait"></span>
+      <b>Réseau local du cabinet — Wi-Fi ou câble, sans internet</b>
+      <span class="trait"></span>
+    </div>
+
+    <p class="note-reseau anim">
+      <strong>Si le PC pilote est éteint</strong>, les autres postes continuent de fonctionner
+      <strong>72 heures</strong>. Au-delà, ils attendent son retour. Un quatrième poste ?
+      <strong>3 000 DA</strong>, à vie.
+    </p>
+  </div>
+</section>
+
+<!-- ======================= 4. GALERIE ======================= -->
+<section class="galerie" id="ecrans">
+  <div class="zone">
+    <div class="numero anim" style="color:var(--or)">04 — LE LOGICIEL</div>
+    <h2 class="anim">Onze écrans. <em>Aucun superflu.</em></h2>
+    <p class="intro anim">Le cabinet entier, du rendez-vous du matin à la recette du soir.</p>
 
     <div class="onglets" id="onglets"></div>
-    <div class="scene anim">
-      <img id="scene-image" src="captures/02-agenda.png" width="1780" alt="Agenda du jour de DentaFlow">
+    <div class="cadre anim">
+      <img id="scene-image" src="captures/01-tableau-de-bord.png" width="2200" height="1330"
+           decoding="async" alt="Tableau de bord de DentaFlow">
     </div>
-    <p class="legende" id="scene-legende">Agenda — les rendez-vous du jour, par praticien.</p>
+    <p class="legende-ecran" id="scene-legende">Tableau de bord — l'essentiel du jour ; chaque carte s'ouvre d'un clic.</p>
   </div>
 </section>
 
-<!-- ======================= TOUT INCLUS ======================= -->
-<section>
-  <div class="enveloppe">
-    <div class="titre-section anim">
-      <span class="oeil">Tout est compris</span>
-      <h2>Aucune option à payer en plus</h2>
-      <p>Ces fonctions sont toutes dans la licence unique.</p>
+<!-- ======================= 5. COMPARAISON ======================= -->
+<section class="chapitre">
+  <div class="zone">
+    <div class="numero anim">05 — COMPARAISON</div>
+    <h2 class="anim">Face aux <em>deux autres façons</em> de tenir un cabinet.</h2>
+    <p class="intro anim">
+      Le cahier et le tableur d'un côté, les logiciels en ligne par abonnement de l'autre.
+      Voici ce qui change concrètement.
+    </p>
+
+    <div class="compare-tab anim">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            <th>Cahier ou Excel</th>
+            <th>Logiciel en ligne, par abonnement</th>
+            <th class="nous">DentaFlow</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Fonctionne sans internet</td>
+            <td class="c oui">Oui</td>
+            <td class="c non">Non, par nature</td>
+            <td class="c nous oui">Oui</td>
+          </tr>
+          <tr>
+            <td>Ce que vous payez</td>
+            <td class="c non">Rien</td>
+            <td class="c">Tous les mois</td>
+            <td class="c nous">12 000 DA, une fois</td>
+          </tr>
+          <tr>
+            <td>Où sont vos données</td>
+            <td class="c">Au cabinet</td>
+            <td class="c">Sur un serveur distant</td>
+            <td class="c nous">Sur votre PC</td>
+          </tr>
+          <tr>
+            <td>Retrouver un dossier patient</td>
+            <td class="c non">À la main</td>
+            <td class="c oui">Instantané</td>
+            <td class="c nous oui">Instantané</td>
+          </tr>
+          <tr>
+            <td>Recette du jour, impayés, no-show</td>
+            <td class="c non">À recalculer</td>
+            <td class="c">Selon l'offre</td>
+            <td class="c nous oui">Sur l'écran d'accueil</td>
+          </tr>
+          <tr>
+            <td>Odontogramme</td>
+            <td class="c">Schéma papier</td>
+            <td class="c">Selon l'offre</td>
+            <td class="c nous oui">Anatomique, face et dessus</td>
+          </tr>
+          <tr>
+            <td>Relance des impayés</td>
+            <td class="c non">Manuelle</td>
+            <td class="c">Selon l'offre</td>
+            <td class="c nous oui">WhatsApp, en un clic</td>
+          </tr>
+          <tr>
+            <td>Si le support est perdu ou abîmé</td>
+            <td class="c non">Tout est perdu</td>
+            <td class="c">Chez l'hébergeur</td>
+            <td class="c nous oui">Sauvegarde auto, reprise seule</td>
+          </tr>
+          <tr>
+            <td>Postes du cabinet</td>
+            <td class="c">—</td>
+            <td class="c">Selon l'offre</td>
+            <td class="c nous oui">3 inclus, +3 000 DA ensuite</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="inclus anim">
-      <div><span class="coche">✓</span> Agenda par praticien</div>
-      <div><span class="coche">✓</span> Dossiers patients illimités</div>
-      <div><span class="coche">✓</span> Odontogramme face + dessus</div>
-      <div><span class="coche">✓</span> Devis et suivi des paiements</div>
-      <div><span class="coche">✓</span> Ordonnances types en PDF</div>
-      <div><span class="coche">✓</span> Feuille de soins CNAS / CASNOS</div>
-      <div><span class="coche">✓</span> Certificats et arrêts de travail</div>
-      <div><span class="coche">✓</span> Laboratoire : envoyé → reçu → posé</div>
-      <div><span class="coche">✓</span> Stock, seuils d'alerte, kits par acte</div>
-      <div><span class="coche">✓</span> Journal de caisse et export Excel</div>
-      <div><span class="coche">✓</span> Statistiques et relances WhatsApp</div>
-      <div><span class="coche">✓</span> Parodontologie, 6 sites par dent</div>
-      <div><span class="coche">✓</span> Rôles, permissions et code PIN</div>
-      <div><span class="coche">✓</span> Journal d'activité exportable</div>
-      <div><span class="coche">✓</span> Sauvegarde automatique quotidienne</div>
-      <div><span class="coche">✓</span> Reprise auto si le fichier est abîmé</div>
+
+    <p class="mention anim">
+      Comparaison avec les deux façons de faire les plus répandues dans les cabinets algériens.
+      Les logiciels en ligne varient beaucoup d'une offre à l'autre : les points marqués
+      « selon l'offre » sont à vérifier auprès de l'éditeur concerné.
+    </p>
+  </div>
+</section>
+
+<!-- ======================= 6. LE PRIX ======================= -->
+<section class="prix-scene" id="prix">
+  <div class="zone">
+    <div class="numero anim">06 — LE PRIX</div>
+    <div class="montant anim">12 000 <small>DA</small></div>
+    <div class="une-fois anim">une seule fois, à vie</div>
+
+    <div class="details-prix anim">
+      <div><b>3 postes</b><span>compris dans la licence</span></div>
+      <div><b>+3 000 DA</b><span>par poste supplémentaire</span></div>
+      <div><b>3 jours</b><span>d'essai, toutes fonctions</span></div>
+    </div>
+
+    <p class="compare anim">
+      Aucun abonnement. Aucune option payante. Les mises à jour sont comprises.
+    </p>
+
+    <div class="actions-scene anim">
+      <a class="btn btn-or" href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe">Télécharger et essayer</a>
+      <a class="btn btn-ligne" href="https://wa.me/213676538803">Obtenir ma licence</a>
     </div>
   </div>
 </section>
 
-<!-- ======================= TARIF ======================= -->
-<section class="tarif" id="tarif">
-  <div class="enveloppe">
-    <div class="titre-section anim">
-      <span class="oeil">Tarif</span>
-      <h2>Un prix pensé pour les cabinets algériens</h2>
-      <p>Vous payez une fois. Le logiciel est à vous.</p>
-    </div>
+<!-- ======================= 6. TOUT EST COMPRIS ======================= -->
+<section class="chapitre">
+  <div class="zone">
+    <div class="numero anim">07 — COMPRIS SANS SUPPLÉMENT</div>
+    <h2 class="anim">Tout est dans la licence. <em>Aucune option payante.</em></h2>
 
-    <div class="grille-tarif">
-      <div class="carte-tarif anim">
-        <span class="etiquette" style="color:var(--or-fonce)">Essai</span>
-        <div class="prix">Gratuit</div>
-        <p>3 jours, toutes les fonctions débloquées.</p>
-        <ul class="liste">
-          <li>Aucune carte bancaire</li>
-          <li>Aucun compte à créer</li>
-          <li>Vos données sont conservées si vous achetez</li>
-        </ul>
-        <a class="btn btn-clair" style="margin-top:22px" href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe">⬇ Commencer l'essai</a>
-      </div>
-
-      <div class="carte-tarif vedette anim">
-        <span class="etiquette">Licence Cabinet · à vie</span>
-        <div class="prix">12 000 <small>DA</small></div>
-        <p>Trois postes inclus : Gérant, Assistante, Praticien.</p>
-        <ul class="liste">
-          <li>Un seul code pour tout le cabinet</li>
-          <li>Les autres postes s'activent seuls sur le réseau</li>
-          <li>Poste supplémentaire : <strong>+3 000 DA</strong>, à vie</li>
-          <li>Mises à jour incluses</li>
-          <li>Assistance par WhatsApp</li>
-        </ul>
-        <a class="btn btn-or" style="margin-top:22px" href="https://wa.me/213676538803">💬 Obtenir ma licence</a>
-      </div>
+    <div class="tout anim">
+      <p>Agenda par praticien</p>
+      <p>Dossiers patients illimités</p>
+      <p>Odontogramme face et dessus</p>
+      <p>Parodontologie, 6 sites par dent</p>
+      <p>Devis et suivi des paiements</p>
+      <p>Impayés et relance WhatsApp</p>
+      <p>Ordonnances types en PDF</p>
+      <p>Certificats et arrêts de travail</p>
+      <p>Feuille de soins CNAS / CASNOS</p>
+      <p>Laboratoire : envoyé, reçu, posé</p>
+      <p>Stock, seuils d'alerte, kits par acte</p>
+      <p>Journal de caisse, export Excel</p>
+      <p>Statistiques et activité par praticien</p>
+      <p>Kiosque patient par QR code</p>
+      <p>Rôles, permissions et code PIN</p>
+      <p>Journal d'activité exportable</p>
+      <p>Sauvegarde automatique quotidienne</p>
+      <p>Reprise auto si le fichier est abîmé</p>
     </div>
-    <p class="note">Pas d'abonnement, pas de frais cachés. Si le PC principal est éteint, les autres postes continuent de fonctionner 72 heures.</p>
   </div>
 </section>
 
-<!-- ======================= APPEL FINAL ======================= -->
-<section class="final">
-  <div class="enveloppe">
-    <h2>Essayez ce soir, décidez dans trois jours</h2>
-    <p>L'installation prend deux minutes et ne demande aucun droit administrateur. Des données de démonstration vous permettent de tout essayer avant de saisir votre premier patient.</p>
-    <div class="actions">
-      <a class="btn btn-or" href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe">⬇ Télécharger DentaFlow</a>
-      <a class="btn btn-clair" href="https://wa.me/213676538803">💬 +213 676 53 88 03</a>
+<!-- ======================= FIN ======================= -->
+<section class="fin">
+  <div class="zone">
+    <h2>Vous avez cliqué sur une dent. Le reste du logiciel est aussi simple.</h2>
+    <p>Deux minutes d'installation, aucun droit administrateur, des données de démonstration pour tout essayer avant de saisir votre premier patient.</p>
+    <div class="btns">
+      <a class="btn btn-or" style="background:var(--or-fonce)" href="https://github.com/zinaimohamedali-lab/dentaflow/releases/latest/download/DentaFlow-Setup.exe">Télécharger DentaFlow</a>
+      <a class="btn btn-clair" href="https://wa.me/213676538803">WhatsApp 0676 53 88 03</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="enveloppe pied">
-    <div><strong>DentaFlow</strong> — Algérie · © 2026 · Tous droits réservés.</div>
+  <div class="zone">
+    <div><strong style="color:#fff">DentaFlow</strong> — Algérie · © 2026</div>
     <div>
-      <a href="https://wa.me/213676538803">WhatsApp +213 676 53 88 03</a>
-      &nbsp;·&nbsp;
+      <a href="https://wa.me/213676538803">WhatsApp 0676 53 88 03</a> ·
       <a href="https://github.com/zinaimohamedali-lab/dentaflow/releases">Notes de version</a>
     </div>
   </div>
 </footer>
 
 <script>
-// -------- Galerie d'écrans --------
-var ecrans = [
-  ["Agenda",          "02-agenda",          "les rendez-vous du jour, par praticien."],
-  ["Patients",        "03-patients",        "dossier complet, odontogramme, historique et prochain rendez-vous."],
-  ["Devis",           "04-devis",           "devis par acte, validité, encaissements et reste à payer."],
-  ["Ordonnances",     "05-ordonnances",     "prescriptions types de chirurgie dentaire, exportées en PDF A5."],
-  ["Laboratoire",     "06-laboratoire",     "suivi des prothèses — envoyé, reçu, posé — et le coût labo."],
-  ["Stock",           "07-stock",           "articles, entrées, sorties, seuils d'alerte et kits par acte."],
-  ["Caisse",          "08-caisse",          "journal des encaissements, exportable vers Excel."],
-  ["Statistiques",    "09-statistiques",    "chiffre d'affaires, activité par praticien, impayés et rappels."],
-  ["Kiosque QR",      "10-demandes",        "les demandes envoyées par les patients depuis leur téléphone."],
-  ["Paramètres",      "11-parametres",      "identité du cabinet, logo, équipe, permissions et sauvegardes."],
-  ["Tableau de bord", "01-tableau-de-bord", "l'essentiel du jour ; chaque carte s'ouvre d'un clic."]
-];
-var zoneOnglets = document.getElementById('onglets');
-var image = document.getElementById('scene-image');
-var legende = document.getElementById('scene-legende');
+/* ================= L'odontogramme, avec les vraies silhouettes du logiciel =================
+   Chaque contour est repris tel quel de AnatomieDentaire.cs. Le viewBox est ajusté au
+   contour réel de chaque dent : les proportions entre incisive et molaire sont donc
+   exactes, comme dans une vraie bouche. */
+var FORMES = {
+  incisiveCentraleHaut:{ vb:"21 5 61 158", d:"M 36,88 C 33,60 37,30 47,11 C 49,7 54,7 56,11 C 66,30 70,60 67,88 C 75,104 80,132 79,148 C 78,156 74,161 68,161 L 35,161 C 29,161 25,156 24,148 C 23,132 28,104 36,88 Z" },
+  incisiveLateraleHaut:{ vb:"28 12 48 148", d:"M 39,90 C 36,64 40,36 48,18 C 50,14 54,14 56,18 C 64,36 68,64 65,90 C 71,106 74,132 73,146 C 72,154 68,158 63,158 L 41,158 C 36,158 32,154 31,146 C 30,132 33,106 39,90 Z" },
+  canineHaut:{ vb:"21 0 58 172", d:"M 34,88 C 30,56 35,22 46,6 C 48,2 53,2 55,6 C 67,22 71,56 67,88 C 77,110 76,136 60,160 C 56,165 53,168 50,170 C 47,168 44,165 40,160 C 24,136 23,110 34,88 Z" },
+  premolaireBiHaut:{ vb:"12 7 76 154", d:"M 20,88 C 16,62 18,32 24,16 C 26,9 33,9 35,17 C 40,40 44,64 47,80 C 49,84 51,84 53,80 C 56,64 60,40 65,17 C 67,9 74,9 76,16 C 82,32 84,62 80,88 C 86,108 86,134 80,148 C 78,153 74,157 70,158 C 66,159 62,156 58,150 C 55,146 51,145 50,148 C 49,145 45,146 42,150 C 38,156 34,159 30,158 C 26,157 22,153 20,148 C 14,134 14,108 20,88 Z" },
+  premolaireUniHaut:{ vb:"21 6 56 155", d:"M 30,90 C 26,62 30,32 44,12 C 46,8 52,8 54,12 C 68,32 72,62 68,90 C 75,110 75,136 69,149 C 67,154 63,157 59,158 C 55,159 51,156 50,150 C 49,156 45,159 41,158 C 37,157 33,154 31,149 C 25,136 23,110 30,90 Z" },
+  molaireHaut:{ vb:"4 5 94 158", d:"M 14,86 C 9,60 8,32 12,16 C 14,8 22,8 25,17 C 29,40 32,62 34,76 C 37,64 41,36 45,14 C 47,7 55,7 57,14 C 61,36 65,64 68,76 C 70,62 73,40 77,17 C 80,8 88,8 90,16 C 94,32 93,60 88,86 C 96,108 96,138 89,152 C 86,158 81,161 75,161 C 70,161 66,158 63,153 C 61,150 58,150 56,153 C 54,156 50,157 47,153 C 45,150 42,150 40,153 C 37,158 32,161 27,161 C 21,161 16,158 13,152 C 6,138 6,108 14,86 Z" },
+  incisiveCentraleBas:{ vb:"31 7 38 154", d:"M 41,13 C 41,10 43,9 46,9 L 54,9 C 57,9 59,10 59,13 C 62,32 64,56 63,77 C 67,103 63,135 53,155 C 51,159 48,159 46,155 C 36,135 33,103 37,77 C 36,56 38,32 41,13 Z" },
+  incisiveLateraleBas:{ vb:"29 7 43 156", d:"M 38,13 C 38,10 40,9 43,9 L 57,9 C 60,9 62,10 62,13 C 66,32 68,56 66,77 C 70,104 66,136 55,156 C 53,160 48,160 46,156 C 35,136 31,104 35,77 C 33,56 35,32 38,13 Z" },
+  canineBas:{ vb:"25 1 50 165", d:"M 50,3 C 53,5 57,10 60,16 C 64,32 68,58 66,80 C 73,106 69,140 55,160 C 53,164 47,164 45,160 C 31,140 27,106 34,80 C 32,58 36,32 40,16 C 43,10 47,5 50,3 Z" },
+  premolaireBas:{ vb:"24 6 53 157", d:"M 33,16 C 35,10 40,8 44,14 C 46,19 48,24 50,29 C 52,24 54,19 56,14 C 60,8 65,10 67,16 C 71,36 73,58 70,80 C 75,106 71,138 56,158 C 54,162 47,162 45,158 C 30,138 26,106 31,80 C 28,58 30,36 33,16 Z" },
+  molaireBas:{ vb:"5 9 90 154", d:"M 14,22 C 16,14 22,11 29,12 C 34,13 37,16 39,20 C 41,24 46,24 48,20 C 50,16 55,15 58,19 C 61,23 66,23 68,19 C 71,14 78,11 84,14 C 89,17 91,20 90,26 C 93,46 93,68 89,86 C 93,112 90,142 82,157 C 79,162 73,162 70,157 C 62,140 56,116 50,101 C 44,116 38,140 30,157 C 27,162 21,162 18,157 C 10,142 7,112 11,86 C 7,68 9,44 14,22 Z" }
+};
 
-ecrans.forEach(function(ecran, index){
-  var bouton = document.createElement('button');
-  bouton.className = 'onglet' + (index === 0 ? ' actif' : '');
-  bouton.type = 'button';
-  bouton.textContent = ecran[0];
-  bouton.addEventListener('click', function(){
-    image.src = 'captures/' + ecran[1] + '.png';
-    image.alt = ecran[0] + ' — DentaFlow';
-    legende.textContent = ecran[0] + ' — ' + ecran[2];
-    Array.prototype.forEach.call(zoneOnglets.children, function(b){ b.classList.remove('actif'); });
-    bouton.classList.add('actif');
+function formePour(numero){
+  var quadrant = Math.floor(numero / 10), rang = numero % 10, haut = (quadrant === 1 || quadrant === 2);
+  if (haut) {
+    if (rang === 1) return FORMES.incisiveCentraleHaut;
+    if (rang === 2) return FORMES.incisiveLateraleHaut;
+    if (rang === 3) return FORMES.canineHaut;
+    if (rang === 4) return FORMES.premolaireBiHaut;
+    if (rang === 5) return FORMES.premolaireUniHaut;
+    return FORMES.molaireHaut;
+  }
+  if (rang === 1) return FORMES.incisiveCentraleBas;
+  if (rang === 2) return FORMES.incisiveLateraleBas;
+  if (rang === 3) return FORMES.canineBas;
+  if (rang === 4 || rang === 5) return FORMES.premolaireBas;
+  return FORMES.molaireBas;
+}
+
+var NOMS = {1:"Incisive centrale",2:"Incisive latérale",3:"Canine",4:"1re prémolaire",
+            5:"2e prémolaire",6:"1re molaire",7:"2e molaire",8:"Dent de sagesse"};
+var ETATS = ["saine","carie","plombage","couronne","absente","implant"];
+var LIBELLES = {saine:"saine",carie:"carie",plombage:"plombage",couronne:"couronne",absente:"absente",implant:"implant"};
+
+var HAUT = [18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28];
+var BAS  = [48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38];
+
+// Facteur d'affichage : ajusté à la largeur disponible pour que les 16 dents tiennent.
+function facteur(){
+  var large = Math.min(document.documentElement.clientWidth - 60, 1070);
+  return Math.max(0.20, Math.min(0.62, large / 1180));
+}
+
+function construire(numeros, hote, k){
+  hote.innerHTML = "";
+  numeros.forEach(function(n){
+    var f = formePour(n);
+    var vb = f.vb.split(" ").map(Number);
+    var miroir = (Math.floor(n / 10) === 2 || Math.floor(n / 10) === 3);
+
+    var bouton = document.createElement("button");
+    bouton.className = "dent";
+    bouton.dataset.etat = "saine";
+    bouton.dataset.numero = n;
+    bouton.type = "button";
+    bouton.title = NOMS[n % 10] + " — dent " + n;
+    bouton.setAttribute("aria-label", "Dent " + n + ", " + NOMS[n % 10] + ", saine");
+
+    bouton.innerHTML =
+      '<svg viewBox="' + f.vb + '" width="' + (vb[2] * k).toFixed(1) + '" height="' + (vb[3] * k).toFixed(1) + '"' +
+      (miroir ? ' style="transform:scaleX(-1)"' : '') + '><path d="' + f.d + '"/></svg>' +
+      '<span class="num">' + n + '</span>';
+
+    bouton.addEventListener("click", function(){
+      var i = ETATS.indexOf(bouton.dataset.etat);
+      var suivant = ETATS[(i + 1) % ETATS.length];
+      bouton.dataset.etat = suivant;
+      bouton.setAttribute("aria-label", "Dent " + n + ", " + NOMS[n % 10] + ", " + LIBELLES[suivant]);
+      annoncer(n, suivant);
+    });
+
+    hote.appendChild(bouton);
   });
-  zoneOnglets.appendChild(bouton);
+}
+
+var compteur = document.getElementById("compteur");
+var dejaTouche = false;
+function annoncer(numero, etat){
+  dejaTouche = true;
+  var texte = etat === "saine"
+    ? "Dent <b>" + numero + "</b> — " + NOMS[numero % 10].toLowerCase() + ", remise à l'état sain."
+    : "Dent <b>" + numero + "</b> — " + NOMS[numero % 10].toLowerCase() + " : <b>" + LIBELLES[etat] + "</b>.";
+  compteur.innerHTML = texte + " Dans le logiciel, l'état est aussi reporté sur la vue du dessus.";
+}
+
+function dessiner(){
+  var k = facteur();
+  construire(HAUT, document.getElementById("arcade-haut"), k);
+  construire(BAS, document.getElementById("arcade-bas"), k);
+  if (!dejaTouche) compteur.innerHTML = "Chaque clic fait défiler les états, exactement comme dans le logiciel.";
+}
+dessiner();
+var minuteur;
+addEventListener("resize", function(){ clearTimeout(minuteur); minuteur = setTimeout(dessiner, 180); }, {passive:true});
+
+/* ================= Galerie d'écrans ================= */
+var ECRANS = [
+  ["Tableau de bord", "01-tableau-de-bord", "l'essentiel du jour ; chaque carte s'ouvre d'un clic."],
+  ["Agenda",          "02-agenda",          "les rendez-vous du jour, par praticien."],
+  ["Patients",        "03-patients",        "dossier complet, odontogramme, prochain rendez-vous."],
+  ["Devis",           "04-devis",           "devis par acte, validité, encaissements et reste à payer."],
+  ["Ordonnances",     "05-ordonnances",     "prescriptions types, exportées en PDF A5."],
+  ["Laboratoire",     "06-laboratoire",     "envoyé, reçu, posé — et le coût labo."],
+  ["Stock",           "07-stock",           "articles, seuils d'alerte et kits par acte."],
+  ["Caisse",          "08-caisse",          "journal des encaissements, exportable vers Excel."],
+  ["Statistiques",    "09-statistiques",    "chiffre d'affaires, activité par praticien, impayés."],
+  ["Kiosque QR",      "10-demandes",        "les demandes envoyées par les patients."],
+  ["Paramètres",      "11-parametres",      "identité du cabinet, logo, équipe, permissions."]
+];
+var zoneOnglets = document.getElementById("onglets");
+var imageEcran = document.getElementById("scene-image");
+var legendeEcran = document.getElementById("scene-legende");
+
+ECRANS.forEach(function(e, i){
+  var b = document.createElement("button");
+  b.className = "onglet" + (i === 0 ? " actif" : "");
+  b.type = "button";
+  b.textContent = e[0];
+  b.addEventListener("click", function(){
+    imageEcran.src = "captures/" + e[1] + ".png";
+    imageEcran.alt = e[0] + " — DentaFlow";
+    legendeEcran.textContent = e[0] + " — " + e[2];
+    Array.prototype.forEach.call(zoneOnglets.children, function(x){ x.classList.remove("actif"); });
+    b.classList.add("actif");
+  });
+  zoneOnglets.appendChild(b);
 });
 
-// -------- En-tête au défilement --------
-var entete = document.getElementById('entete');
-addEventListener('scroll', function(){
-  entete.classList.toggle('colle', window.scrollY > 12);
-}, {passive:true});
-
-// -------- Apparition progressive --------
-if ('IntersectionObserver' in window) {
-  var observateur = new IntersectionObserver(function(entrees){
+/* ================= Apparition ================= */
+if ("IntersectionObserver" in window) {
+  var obs = new IntersectionObserver(function(entrees){
     entrees.forEach(function(e){
-      if (e.isIntersecting) { e.target.classList.add('vu'); observateur.unobserve(e.target); }
+      if (e.isIntersecting) { e.target.classList.add("vu"); obs.unobserve(e.target); }
     });
-  }, {rootMargin:'0px 0px -60px 0px'});
-  document.querySelectorAll('.anim').forEach(function(el){ observateur.observe(el); });
+  }, {rootMargin:"0px 0px -50px 0px"});
+  document.querySelectorAll(".anim").forEach(function(el){ obs.observe(el); });
 } else {
-  document.querySelectorAll('.anim').forEach(function(el){ el.classList.add('vu'); });
+  document.querySelectorAll(".anim").forEach(function(el){ el.classList.add("vu"); });
 }
 </script>
 </body>
