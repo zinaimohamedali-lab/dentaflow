@@ -8,7 +8,7 @@
 [![Télécharger](https://img.shields.io/badge/⬇_Télécharger-DentaFlow_Setup-C6A15B?style=for-the-badge)](../../releases/latest)
 &nbsp;
 ![Windows](https://img.shields.io/badge/Windows-10_/_11-1E2438?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-1.3.5-B4903F?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.3.6-B4903F?style=for-the-badge)
 
 </div>
 
@@ -47,6 +47,7 @@ Si le pilote est éteint, les autres postes continuent de fonctionner **72 heure
 - **🔬 Parodontologie** — sondage 6 sites par dent, historique.
 - **📱 Kiosque patient QR** — le patient remplit sa demande depuis son téléphone à l'accueil.
 - **🖨️ Documents en A5** — devis, ordonnances et certificats à votre logo, en en-tête et en filigrane.
+- **🛡️ Protection des données** — sauvegarde automatique quotidienne et **reprise sur sauvegarde** si le fichier de données est endommagé.
 
 ## 🔐 Sécurité & multi-postes
 
