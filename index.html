@@ -73,7 +73,9 @@ h1,h2,h3,p,figure,blockquote{margin:0}
 .sous-invite{margin-top:16px; font-size:clamp(16px,1.8vw,19px); color:var(--gris); max-width:44ch}
 
 /* --- La bouche --- */
-.bouche{margin:38px 0 10px; user-select:none}
+/* « auto » à gauche et à droite, sinon cette règle écrase le margin:0 auto
+   de .zone et toute la bouche se colle au bord gauche de l'écran. */
+.bouche{margin:38px auto 10px; user-select:none}
 .arcade{display:flex; justify-content:center; align-items:flex-end; gap:clamp(1px,.45vw,6px); flex-wrap:nowrap}
 .arcade.bas{align-items:flex-start; margin-top:26px}
 .dent{
