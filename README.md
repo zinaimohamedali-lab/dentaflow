@@ -8,7 +8,7 @@
 [![Télécharger](https://img.shields.io/badge/⬇_Télécharger-DentaFlow_Setup-C6A15B?style=for-the-badge)](../../releases/latest)
 &nbsp;
 ![Windows](https://img.shields.io/badge/Windows-10_/_11-1E2438?style=for-the-badge)
-![Version](https://img.shields.io/badge/version-1.2.3-B4903F?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-1.3.4-B4903F?style=for-the-badge)
 
 </div>
 
@@ -34,17 +34,19 @@ Si le pilote est éteint, les autres postes continuent de fonctionner **72 heure
 
 ## ✨ Fonctionnalités
 
-- **📅 Agenda** — rendez-vous par praticien, vue jour/semaine.
-- **👥 Patients & odontogramme** — dossier complet, schéma dentaire, antécédents médicaux, N° d'assuré.
-- **📝 Devis & paiements** — devis par acte, suivi des règlements, impayés, export PDF.
+- **📅 Agenda** — rendez-vous par praticien, saisie rétroactive tracée au journal.
+- **👥 Patients** — dossier complet, prochain rendez-vous en tête de fiche, antécédents, N° d'assuré.
+- **🦷 Odontogramme anatomique** — vraies silhouettes dentaires FDI, **vue de face et vue du dessus synchronisées**.
+- **📝 Devis & paiements** — devis par acte, acte libre « Autre », validité, impayés, export PDF.
 - **💊 Ordonnances** — prescriptions dentaires types, export PDF.
-- **🦴 Laboratoire** — fiche navette (envoyé → reçu → posé), coût labo.
+- **🦴 Laboratoire** — fiche navette (envoyé → reçu → posé), états réversibles, coût labo.
 - **📦 Stock** — articles, mouvements, seuils d'alerte, kits par acte.
 - **💵 Caisse** — journal des encaissements, export CSV.
-- **📊 Statistiques** — CA 6 mois, top actes, impayés avec relance WhatsApp, rappel patients.
+- **📊 Statistiques** — CA 6 mois, **activité par praticien**, top actes, impayés avec relance WhatsApp.
 - **🏥 Feuille de soins CNAS** — PDF conforme (N° d'immatriculation, honoraires, signatures).
 - **🔬 Parodontologie** — sondage 6 sites par dent, historique.
 - **📱 Kiosque patient QR** — le patient remplit sa demande depuis son téléphone à l'accueil.
+- **🖨️ Documents en A5** — devis, ordonnances et certificats à votre logo, en en-tête et en filigrane.
 
 ## 🔐 Sécurité & multi-postes
 
@@ -60,7 +62,7 @@ Si le pilote est éteint, les autres postes continuent de fonctionner **72 heure
 2. Double-cliquez, suivez l'assistant (2 minutes, aucun droit administrateur requis).
 3. Lancez DentaFlow → votre **essai de 3 jours** démarre automatiquement.
 
-**Configuration :** Windows 10 / 11 (64 bits) · ~56 Mo · .NET inclus.
+**Configuration :** Windows 10 / 11 (64 bits) · ~60 Mo · .NET inclus.
 
 > ℹ️ Au premier lancement, Windows SmartScreen peut afficher un avertissement (éditeur non encore reconnu par une autorité mondiale). Cliquez sur **« Informations complémentaires » → « Exécuter quand même »**. Le fichier est signé au nom de **DentaFlow DZ**.
 
